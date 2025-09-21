@@ -39,6 +39,7 @@ coverage.xml
 # Local
 .env
 .env.local
+.env.*
 *.log
 
 # Documentation
@@ -46,8 +47,3 @@ coverage.xml
 
 # Project specific
 .secrets.baseline
-
-# template package
-template/
-!template/src/template_package/*
-!template/tests/*
