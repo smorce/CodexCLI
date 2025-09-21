@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Microsoft Copilot Blog</title>
+	<atom:link href="https://www.microsoft.com/en-us/microsoft-copilot/blog/feed/" rel="self" type="application/rss+xml" />
+	<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/</link>
+	<description></description>
+	<lastBuildDate>Wed, 27 Aug 2025 17:11:55 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.2</generator>
+	<item>
+		<title>A smarter way to talk to your TV: Microsoft Copilot launches on Samsung TVs and monitors  </title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/27/a-smarter-way-to-talk-to-your-tv-microsoft-copilot-launches-on-samsung-tvs-and-monitors/</link>
+					<comments>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/27/a-smarter-way-to-talk-to-your-tv-microsoft-copilot-launches-on-samsung-tvs-and-monitors/#respond</comments>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Wed, 27 Aug 2025 16:00:00 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=5899</guid>
+
+					<description><![CDATA[<p>Voice-powered AI meets a visual companion for entertainment, everyday help, and everything in between. &#160; Redmond, Wash., August 27—Today, we’re announcing the launch of Copilot on select Samsung TVs and monitors, transforming the biggest screen in your home into your most personal and helpful companion—and it’s free to use. &#160; Copilot makes your TV easier</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/27/a-smarter-way-to-talk-to-your-tv-microsoft-copilot-launches-on-samsung-tvs-and-monitors/">A smarter way to talk to your TV: Microsoft Copilot launches on Samsung TVs and monitors  </a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p><em>Voice-powered AI meets a visual companion for entertainment, everyday help, and everything in between. </em>&nbsp;</p>
+
+
+
+<p><em>Redmond, Wash., August 27</em>—Today, we’re announcing the launch of<em> </em>Copilot on select Samsung TVs and monitors, transforming the biggest screen in your home into your most personal and helpful companion—and it’s free to use. &nbsp;<br><br>Copilot makes your TV easier and more fun to use with its voice-powered interface, friendly on-screen character, and simple visual cards. Now you can quickly find what you’re looking for and discover new favorites right from your living room.&nbsp;&nbsp;&nbsp;</p>
+
+
+
+<p>Because it lives on the biggest screen in the home, Copilot is a social experience—something you can use together with family and friends to spark conversations, help groups decide what to watch, and turn the TV into a shared space for curiosity and connection.&nbsp;</p>
+
+
+
+<p>&#8220;Copilot on Samsung TVs and monitors brings AI out of your pocket and into the heart of your home,&#8221; said David Washington, Partner General Manager, Microsoft AI. &#8220;It’s there when you and your family want to discover something to watch together, get answers to your questions, plan your weekend, or simply hang out.&#8221;&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="built-on-partnership">Built on partnership&nbsp;</h2>
+
+
+
+<p>Microsoft and Samsung have a long history of bringing the best of technology together, from Windows and Office on Galaxy devices to Xbox Cloud Gaming on Samsung TVs. This collaboration brings that same spirit of innovation to Copilot, making your TV smarter, more personal, and more fun.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="for-recaps-rabbit-holes-and-everything-in-between">For recaps, rabbit holes, and everything in-between&nbsp;</h2>
+
+
+
+<p>Copilot shines when it comes to finding your next favorite thing to watch, but it’s also there for the little questions, big plans, and everyday moments in between.&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Custom, spoiler-free recaps: </strong>&#8220;I want to get back into <em>The Crown, </em>I left off at Season 3, Episode 4. What happened up until then?&#8221;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Ultra-specific recommendations: </strong>&#8220;Like <em>The Queen’s Gambit</em>, but about cooking instead of chess, and under two hours.&#8221;&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Group-friendly picks</strong>: &#8220;Hannah likes rom-coms, David likes sci-fi, Mark likes thrillers. What’s something we’ll all like?&#8221; Perfect for when everyone’s gathered in the living room and you want to decide together.&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Post-watch deep dives: </strong>&#8220;Who was the voice actor for that character?&#8221; or &#8220;What else has the director done?&#8221;&nbsp;</li>
+</ul>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Everyday help:</strong> &#8220;Will Saturday in Seattle be good conditions for hiking?&#8221; or &#8220;Cheer me up after a breakup.&#8221;  </li>
+</ul>
+
+
+
+<div class="wp-block-media-text is-stacked-on-mobile is-vertically-aligned-center" style="grid-template-columns:85% auto"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/MS_Copilot_Samsung-JR-v02.1.mp4"></video></figure><div class="wp-block-media-text__content">
+<p></p>
+</div></div>
+
+
+
+<p></p>
+
+
+
+<h2 class="wp-block-heading" id="a-more-visual-more-personal-experience">A more visual, more personal experience </h2>
+
+
+
+<p>Copilot’s <strong>appearance</strong> is a friendly, animated presence on your TV that reacts and lip-syncs as it speaks, with expressions that match the tone of the conversation. It’s a visible reminder that your companion is listening, thinking, and responding just for you.&nbsp;<br><br>And when Copilot answers, it doesn’t just tell you; it <strong>shows</strong> you. Movies, weather, and image results appear as rich, glanceable cards designed for the big screen, complete with ratings, photos, and key details.&nbsp;</p>
+
+
+
+<p><strong>How it works</strong>&nbsp;</p>
+
+
+
+<ol start="1" class="wp-block-list">
+<li><strong>Activate Copilot: </strong>Copilot will roll out automatically on select Samsung TVs. Users can see Copilot (on the Apps Tab) at the Samsung Tizen OS home Samsung Daily+. Press the mic button on your Samsung remote and speak naturally.&nbsp;</li>
+</ol>
+
+
+
+<ol start="2" class="wp-block-list">
+<li><strong>(Optional) Sign in for a personal touch:</strong> Use a quick QR code to connect your Microsoft account and unlock Copilot’s personalization, memory, and preferences for you.&nbsp;&nbsp;</li>
+</ol>
+
+
+
+<ol start="3" class="wp-block-list">
+<li><strong>Ask for what you want: </strong>Whether it’s a title, a question, or advice, Copilot understands.&nbsp;</li>
+</ol>
+
+
+
+<ol start="4" class="wp-block-list">
+<li><strong>See and hear your answer: </strong>Watch Copilot respond with a mix of visuals and voice.&nbsp;</li>
+</ol>
+
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/image-13.webp" alt="A screen shot of a movie" class="wp-image-5900 webp-format" srcset="" data-orig-src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/image-13.webp"></figure>
+
+
+
+<p><strong>Availability</strong> <br>Copilot launches in the 2025 lineup of Samsung TVs and monitors<sup> [1]</sup> and is now available, with more model years and features to follow. The experience is available at no cost. </p>
+
+
+
+<p class="has-small-font-size"><sup>[1]</sup> Copilot is available on 2025 TV models including Micro RGB, Neo QLED, OLED, The Frame Pro, The Frame, as well as the M7, M8, and M9 Smart Monitors. Copilot is available in select markets. Availability will expand to additional regions and models over time and experience may vary by market. </p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/27/a-smarter-way-to-talk-to-your-tv-microsoft-copilot-launches-on-samsung-tvs-and-monitors/">A smarter way to talk to your TV: Microsoft Copilot launches on Samsung TVs and monitors  </a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/27/a-smarter-way-to-talk-to-your-tv-microsoft-copilot-launches-on-samsung-tvs-and-monitors/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/MS_Copilot_Samsung-JR-v02.1.mp4" length="34879605" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Release notes: August 7, 2025</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/07/release-notes-august-7-2025/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Thu, 07 Aug 2025 21:46:02 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=5828</guid>
+
+					<description><![CDATA[<p>For an optimal mobile viewing experience, use landscape mode. Welcome to Microsoft’s Copilot Release Notes. Here&#160;we’ll&#160;provide regular updates on&#160;what’s&#160;happening with Copilot, from new features to firmware updates and more. GPT-5 now live in Microsoft Copilot We’re excited to announce that&#160;GPT-5 is now available in Microsoft Copilot&#160;across all markets and platforms—including web, Windows, Mac, and mobile.</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/07/release-notes-august-7-2025/">Release notes: August 7, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p><em>For an optimal mobile viewing experience, use landscape mode.</em></p>
+
+
+
+<p>Welcome to Microsoft’s Copilot Release Notes. Here&nbsp;we’ll&nbsp;provide regular updates on&nbsp;what’s&nbsp;happening with Copilot, from new features to firmware updates and more.</p>
+
+
+
+<h2 class="wp-block-heading" id="gpt-5-now-live-in-microsoft-copilot">GPT-5 now live in Microsoft Copilot</h2>
+
+
+
+<p>We’re excited to announce that&nbsp;GPT-5 is now available in Microsoft Copilot&nbsp;across all markets and platforms—including web, Windows, Mac, and mobile.<ins></ins></p>
+
+
+
+<p>GPT‑5 is the most advanced AI system to date. It’s a unified system built to understand when to respond quickly and when to think more deeply, delivering expert-level results with less effort from you. At its core is a fast, high‑throughput model for everyday questions, a deeper reasoning model (GPT-5 thinking) for complex tasks, and a real‑time router that intelligently selects the right approach based on your intent and the conversation’s complexity.</p>
+
+
+
+<p>With the new&nbsp;Smart Mode, Copilot automatically adapts to your task and routes you to the most capable model, removing the need to switch or guess. Whether you&#8217;re solving complex problems, writing creatively, or turning ideas into visuals, Smart Mode delivers the smartest, most intuitive experience yet.</p>
+
+
+
+<div class="wp-block-group is-layout-constrained wp-block-group-is-layout-constrained">
+<div class="wp-block-media-text alignwide is-stacked-on-mobile is-vertically-aligned-center" style="grid-template-columns:85% auto"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/Copilot-GPT5-16by9-v002-1.mp4"></video></figure><div class="wp-block-media-text__content">
+<p></p>
+</div></div>
+</div>
+
+
+
+<p>This update is not only about faster or better responses. It’s designed to remove friction so you can focus on your ideas instead of the interface. That means more creativity and less configuration.</p>
+
+
+
+<p>How to try it:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Open Copilot on any device</li>
+
+
+
+<li>Select&nbsp;Smart Mode&nbsp;in the Composer</li>
+
+
+
+<li>Start exploring with GPT-5—free to try right now</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="1920" height="1080" src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/Copilot-GPT5-16by9-GIF-no-text.gif" alt="A close-up of user interacting with Copilot interface." class="wp-image-5830" /></figure>
+
+
+
+<p>We can’t wait to see how this helps unlock your creative flow. Try it today and experience the future of AI-powered productivity.</p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-mode-now-available-in-microsoft-edge">Copilot Mode now available in Microsoft Edge</h2>
+
+
+
+<p>Copilot Mode is a new experimental mode that enhances the way we browse. Copilot Mode adds intelligent AI capabilities that transform Edge into a proactive, streamlined assistant. By combining chat, search, and web navigation into a single input box, Copilot Mode helps users make sense of open tabs, anticipate tasks, and stay in flow all while meeting Microsoft’s high standards of security, privacy, and performance. You can speak naturally to Copilot, use it on any webpage, and soon organize your browsing into topic-based journeys. Advanced tasks like bookings and errands are coming soon, with privacy always protected.</p>
+
+
+
+<p>Copilot Mode is free for a limited time and available now on Edge for Windows and Mac. Opt in anytime through your browser settings.</p>
+
+
+
+<p>Try it today at aka.ms/copilot-mode.</p>
+
+
+<div class="wp-block-embed__wrapper">
+			<div class="ms-metrics-youtube-container" data-video-id="67jMrJOO52I" id="ms-metrics-youtube-68c81dcab6e04">
+				<div class="ms-metrics-youtube-player"></div>
+			</div>
+		</div>
+
+
+<div style="height:20px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<h2 class="wp-block-heading" id="copilot-vision-is-now-built-into-moto-ai">Copilot Vision is now built into moto ai&nbsp;</h2>
+
+
+
+<p>Copilot Vision is now just a tap away—fully integrated into moto ai<strong><sup> 1</sup></strong> on select devices<strong><sup> 2</sup></strong>, including the latest motorola razr and edge devices. With this launch, users in the U.S and other regions worldwide<strong><sup> 3</sup></strong> can access Copilot Vision directly from their device. Just open moto ai and tap “Ask Copilot Vision” to begin. &nbsp;</p>
+
+
+
+<p>Copilot Vision turns your camera into an intelligent companion—powered by conversational AI that interprets what you see and responds instantly. Whether you&#8217;re enhancing your home decor, diving into new hobbies, or streamlining your travel experience, Copilot Vision delivers real-time, helpful insights. &nbsp;</p>
+
+
+
+<p>For example, plant-loving Motorola users can use their device’s front or back camera to analyze their plant’s health real-time. And razr users can do this directly from the external display or in tent mode, getting their questions answered without needing to flip open the device. It’s seamless, helpful, and always ready—right where you need it. &nbsp;</p>
+
+
+
+<p>With support for over 50 languages—just like Copilot Voice—Copilot Vision is designed to be intuitive, inclusive, and accessible for users around the world.  When it comes to privacy, users can feel comfortable knowing that they’re in full control—Copilot Vision only accesses the device’s camera or microphone when explicitly activated.  &nbsp;</p>
+
+
+
+<p> &nbsp;</p>
+
+
+
+<p></p>
+
+
+
+<p><strong>Disclaimers</strong> &nbsp;</p>
+
+
+
+<p>1. Motorola Account login is required to access moto ai features. An internet or cellular connection is needed for functionality. &nbsp;</p>
+
+
+
+<p>2. moto ai is available on select motorola razr and motorola edge devices. &nbsp;</p>
+
+
+
+<p>3. Copilot Vision is available in select markets, with more coming soon.   &nbsp;</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/08/07/release-notes-august-7-2025/">Release notes: August 7, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/08/Copilot-GPT5-16by9-v002-1.mp4" length="9201409" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Microsoft incorporates OpenAI’s GPT-5 into consumer, developer and enterprise offerings</title>
+		<link>https://news.microsoft.com/source/features/ai/openai-gpt-5/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Thu, 07 Aug 2025 17:12:12 +0000</pubDate>
+				<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=5821</guid>
+
+					<description><![CDATA[<p>Today Microsoft is incorporating GPT-5,&#160;OpenAI’s best AI system to date, into a wide variety of its products, to bring new reasoning capabilities and improvements to coding and chat across its platforms. GPT-5, which was trained on Azure, includes OpenAI’s latest reasoning models, along with a smart, efficient model, to provide users with the right tool</p>
+<p>The post <a href="https://news.microsoft.com/source/features/ai/openai-gpt-5/">Microsoft incorporates OpenAI’s GPT-5 into consumer, developer and enterprise offerings</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Today Microsoft is incorporating GPT-5,&nbsp;<a href="https://openai.com/index/introducing-gpt-5/" target="_blank" rel="noreferrer noopener">OpenAI’s best AI system to date</a>, into a wide variety of its products, to bring new reasoning capabilities and improvements to coding and chat across its platforms. GPT-5, which was trained on Azure, includes OpenAI’s latest reasoning models, along with a smart, efficient model, to provide users with the right tool for the task at hand, whether in a consumer, enterprise or developer context.&nbsp;</p>
+
+
+
+<p>Through Microsoft 365 Copilot and Microsoft Copilot, enterprise and consumer users can automatically get the benefit of powerful new AI reasoning capabilities to take on increasingly complex tasks – and still rely on fast and more creative responses for many everyday use cases – without having to think about which model is best for the job, thanks to a real-time router.&nbsp;</p>
+
+
+
+<p>Developers across Microsoft platforms will have access to OpenAI’s GPT-5 as well. For example, developers using GitHub Copilot and Visual Studio Code can write, test and deploy code using OpenAI’s&nbsp;<a href="https://openai.com/index/introducing-gpt-5-for-developer" target="_blank" rel="noreferrer noopener">best model yet</a>&nbsp;for coding and agentic tasks, which OpenAI says can complete longer and more complex coding tasks and excels at executing long-running agentic tasks end-to-end. Starting today, developers will also have access to the latest GPT-5 models in Azure AI Foundry, with trusted enterprise-grade security, compliance and privacy protections available in Azure. They will be supported by&nbsp;<a href="https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-router" target="_blank" rel="noreferrer noopener">Microsoft’s built-in model router in Azure AI Foundry</a>&nbsp;to ensure the right model is used.&nbsp;&nbsp;</p>
+
+
+
+<p>The&nbsp;<a href="https://news.microsoft.com/source/features/ai/red-teams-think-like-hackers-to-help-keep-ai-safe/?msockid=175e172bf3356ceb3927013ef2f26d3a" target="_blank" rel="noreferrer noopener">Microsoft AI Red Team</a>, which works to anticipate and reduce potential harms by probing critical AI systems before they are released, tested the GPT-5 reasoning model using its rigorous security protocols. The results show that the reasoning model exhibited one of the strongest AI safety profiles among prior OpenAI models against several modes of attack, including malware generation, fraud/scam automation and other harms.&nbsp;</p>
+
+
+
+<p>The upgrades will be available starting today, giving Microsoft’s consumer, developer and enterprise users immediate access to the increased intelligence and advanced reasoning of the GPT-5 models. Here’s a more detailed look at how the models will roll out across Microsoft products and platforms:&nbsp;&nbsp;</p>
+
+
+
+<figure class="wp-block-image"><img decoding="async" src="https://news.microsoft.com/source/wp-content/uploads/2025/08/microsoft-365-copilot-gpt-5-1024x576.png" alt="An interface of Microsoft 365 Copilot showcasing GPT-5" class="wp-image-21626" /></figure>
+
+
+
+<h2 class="wp-block-heading" id="microsoft-365-copilot">Microsoft 365 Copilot &nbsp;</h2>
+
+
+
+<p>With GPT-5,&nbsp;<a href="https://www.microsoft.com/en-us/microsoft-365/blog/?p=278895" target="_blank" rel="noreferrer noopener">Microsoft 365 Copilot</a>&nbsp;is better at reasoning through complex questions, staying on track in longer conversations and understanding the user’s context.&nbsp;&nbsp;</p>
+
+
+
+<p>Copilot also will now be able to tackle more complicated problems. Customers with Microsoft 365 Copilot licenses can also reason over emails, documents and files – allowing enterprise users to apply OpenAI’s most advanced models to stay on top of work responsibilities and be more productive.&nbsp;&nbsp;&nbsp;</p>
+
+
+
+<p>GPT-5 will also be available in Microsoft Copilot Studio, a platform for building custom agents. Users can select GPT-5 in custom prompts to enable agents to take on more complex business processes.&nbsp;&nbsp;</p>
+
+
+
+<figure class="wp-block-image"><img decoding="async" src="https://news.microsoft.com/source/wp-content/uploads/2025/08/microsoft-copilot-gpt-5.gif" alt="" class="wp-image-21623" /></figure>
+
+
+
+<h2 class="wp-block-heading" id="microsoft-copilot">Microsoft Copilot&nbsp;</h2>
+
+
+
+<p>Microsoft Copilot is the AI companion for everyday tasks, with the ability to assist users in getting answers to tough questions, sharpening their writing or turning ideas into images. Today, people can experience the power of GPT-5 in Copilot for free. The new Smart mode utilizes the latest GPT-5 model to help anyone discover the best possible solutions to their queries.&nbsp;</p>
+
+
+
+<p>People can try GPT-5 with Microsoft Copilot for free by going to copilot.microsoft.com, or using the Copilot app on Windows, Mac, Android and iOS devices.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="github-copilot-and-visual-studio-code">GitHub Copilot and Visual Studio Code&nbsp;</h2>
+
+
+
+<p>GitHub is bringing GPT-5 to all paid&nbsp;<a href="https://github.blog/changelog/2025-08-07-openai-gpt-5-is-now-in-public-preview-for-github-copilot">GitHub Copilot plans</a>. Developers will be able to write, test and deploy code across GitHub Copilot Chat on&nbsp;<a href="http://github.com/">github.com</a>,&nbsp;<a href="https://aka.ms/VSCode/1103/m">Visual Studio Code</a>&nbsp;and GitHub Mobile through the model picker. With the Azure AI Foundry extension, developers in VS Code can also use GPT-5 to develop agents — without leaving the code editor.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="azure-ai-foundry">Azure AI Foundry&nbsp;</h2>
+
+
+
+<p>Azure AI Foundry&nbsp;<a href="https://aka.ms/GPT-5-blog" target="_blank" rel="noreferrer noopener">is making all GPT-5 models</a>&nbsp;available for developers. Starting today, developers can use the model router in Azure AI Foundry to maximize the capabilities of the GPT-5 system of models and other models in Azure AI Foundry. With an AI-powered orchestration layer, the model router evaluates each prompt and decides the optimal model based on the complexity, performance needs and cost efficiency of each task.&nbsp;</p>
+<p>The post <a href="https://news.microsoft.com/source/features/ai/openai-gpt-5/">Microsoft incorporates OpenAI’s GPT-5 into consumer, developer and enterprise offerings</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Release Notes: June 25, 2025</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/25/release-notes-june-25-2025/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Wed, 25 Jun 2025 16:00:05 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=5366</guid>
+
+					<description><![CDATA[<p>Welcome to Microsoft’s Copilot Release Notes. Here&#160;we’ll&#160;provide regular updates on&#160;what’s&#160;happening with Copilot, from new features to firmware updates and more. Copilot&#160;Vision&#160;on mobile&#160;now available for free in the&#160;US Copilot Vision is now available to try for free&#160;in the US&#160;on iOS and Android devices. Vision will also be&#160;rolling out&#160;to all users&#160;worldwide&#160;in the coming weeks. With Copilot Vision, you can use</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/25/release-notes-june-25-2025/">Release Notes: June 25, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome to Microsoft’s Copilot Release Notes. Here&nbsp;we’ll&nbsp;provide regular updates on&nbsp;what’s&nbsp;happening with Copilot, from new features to firmware updates and more.</p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-vision-on-mobile-now-available-for-free-in-the-us">Copilot&nbsp;Vision&nbsp;on mobile&nbsp;now available for free in the&nbsp;US</h2>
+
+
+
+<p>Copilot Vision is now available to try for free&nbsp;in the US&nbsp;on iOS and Android devices. Vision will also be&nbsp;rolling out&nbsp;to all users&nbsp;worldwide&nbsp;in the coming weeks. With Copilot Vision, you can use your&nbsp;phone’s&nbsp;camera to show Copilot what&nbsp;you’re&nbsp;seeing—and get real-time help, guidance, or conversation, just like you would with a friend.&nbsp;</p>
+
+
+
+<p>Whether&nbsp;you&#8217;re:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li>Exploring a new city&nbsp;</li>
+
+
+
+<li>Rearranging your living room decor&nbsp;</li>
+
+
+
+<li>Navigating a confusing airport terminal&nbsp;</li>
+
+
+
+<li>Trying to&nbsp;identify&nbsp;a strange object&nbsp;</li>
+
+
+
+<li>Or just asking, “Does this setup look right?”&nbsp;</li>
+</ul>
+
+
+
+<p>Please note that&nbsp;you must&nbsp;be signed&nbsp;in&nbsp;to&nbsp;Copilot&nbsp;with a Microsoft account (MSA)&nbsp;to&nbsp;use&nbsp;the&nbsp;Vision&nbsp;features on your&nbsp;Copilot mobile app.&nbsp;&nbsp;</p>
+
+
+
+<div class="wp-block-media-text is-stacked-on-mobile" style="grid-template-columns:58% auto"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/06/MS_Copilot_Sizzle_Video03_Vision_9x16.mp4"></video></figure><div class="wp-block-media-text__content">
+<p></p>
+</div></div>
+
+
+
+<p></p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-vision-on-windows-is-here">Copilot Vision on Windows is here&nbsp;</h2>
+
+
+
+<p>We’re also excited to share that Copilot Vision on Windows is now available in the US and coming to more non-European countries by mid-July. When enabled, Copilot can see what you see on your screen and offer helpful, voice-guided support—whether you&#8217;re working across apps, browsing the web, or navigating a tricky task. </p>
+
+
+
+<p>Need help finding an app? Want tips while editing a photo? Trying to understand a form or complete a task in a new tool? Copilot Vision can follow along, offer insights, and even highlight exactly where to click with Highlights, all while you stay in control.&nbsp;</p>
+
+
+
+<p>Copilot Vision is fully opt-in and only activates when you choose to turn it on. You can start or stop sharing at any time with a single click.&nbsp;&nbsp;</p>
+
+
+
+<p>Learn more in the official&nbsp;<a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/12/copilot-vision-on-windows-with-highlights-is-now-available-in-the-u-s/" target="_blank" rel="noreferrer noopener">blog post</a>.</p>
+
+
+
+<h2 class="wp-block-heading" id="deep-research-now-in-the-copilot-app-on-windows">Deep Research now in the&nbsp;Copilot app&nbsp;on Windows&nbsp;</h2>
+
+
+
+<p>Copilot Pro users can now access Deep Research directly from the&nbsp;Copilot&nbsp;app on&nbsp;Windows, the mobile app, and on Copilot.com.&nbsp;This powerful feature helps you tackle complex, multi-step research tasks by finding, analyzing, and synthesizing information from across the web, potentially&nbsp;saving you hours of work&nbsp;in the process.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-actions-expands-to-more-countries">Copilot Actions expands to more countries&nbsp;</h2>
+
+
+
+<p>Copilot Actions, our new feature that lets Copilot complete web tasks on your behalf (like booking hotels, placing shopping orders, or making dinner reservations), is now available to Copilot Pro users in the US, along with the following additional countries: </p>
+
+
+
+<ul class="wp-block-list">
+<li>Australia&nbsp;&nbsp;</li>
+
+
+
+<li>Canada&nbsp;&nbsp;</li>
+
+
+
+<li>Great Britain&nbsp;&nbsp;</li>
+
+
+
+<li>India&nbsp;&nbsp;</li>
+
+
+
+<li>New Zealand&nbsp;&nbsp;</li>
+
+
+
+<li>South Africa&nbsp;&nbsp;</li>
+</ul>
+
+
+
+<p>Copilot Actions is available&nbsp;on&nbsp;Copilot.com&nbsp;on Windows and Mac.&nbsp;To get started, Pro users can open the dropdown menu in the Copilot&nbsp;composer&nbsp;and select <strong>Actions</strong>.&nbsp;Visit&nbsp;Copilot.com/Labs to learn more.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="cryptocurrency-finance-cards-are-now-live">Cryptocurrency Finance Cards are now live&nbsp;</h2>
+
+
+
+<p>We’ve&nbsp;expanded our&nbsp;Copilot&nbsp;Cards collection with a new category: Cryptocurrency. These interactive cards are now fully rolled out across Copilot.com&nbsp;and bring real-time insights to your crypto-related questions.&nbsp;Here’s&nbsp;what’s&nbsp;new:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li><strong>Interactive Charts</strong>: Real-time 24-hour data, just like our&nbsp;current finance&nbsp;cards.&nbsp;</li>
+
+
+
+<li><strong>Detailed Dashboards</strong>:&nbsp;View&nbsp;performance summaries, related news, and other trending cryptocurrencies.&nbsp;</li>
+
+
+
+<li><strong>Expanded Support</strong>: Now covers over 100 of the most popular global cryptocurrencies.&nbsp;</li>
+
+
+
+<li><strong>Local Currency Support</strong>: Ask for prices in your local currency such as “Bitcoin in CAD” or “Solana in INR.”&nbsp;</li>
+</ul>
+
+
+
+<p>This update builds on the&nbsp;cards we recently introduced for Sports,&nbsp;Videos, Weather, and Stocks, giving you quick, visual answers across a growing range of topics.&nbsp;Crypto&nbsp;cards are&nbsp;available on web, with mobile and Windows support rolling out in the coming&nbsp;weeks.&nbsp;</p>
+
+
+
+<p></p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/25/release-notes-june-25-2025/">Release Notes: June 25, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/06/MS_Copilot_Sizzle_Video03_Vision_9x16.mp4" length="41767085" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Copilot Vision on Windows with Highlights is now available in the U.S. </title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/12/copilot-vision-on-windows-with-highlights-is-now-available-in-the-u-s/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Thu, 12 Jun 2025 16:00:04 +0000</pubDate>
+				<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=5339</guid>
+
+					<description><![CDATA[<p>For an optimal mobile viewing experience, use landscape mode. We’re excited to announce that Copilot Vision on Windows with Highlights is now available in the US. This is a major step forward in our journey to make Copilot your everyday companion: one that works with you, sees what you see, and helps you get things</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/12/copilot-vision-on-windows-with-highlights-is-now-available-in-the-u-s/">Copilot Vision on Windows with Highlights is now available in the U.S. </a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p><em>For an optimal mobile viewing experience, use landscape mode.</em></p>
+
+
+
+<p>We’re excited to announce that Copilot Vision on Windows with Highlights is now available in the US. This is a major step forward in our journey to make Copilot your everyday companion: one that works with you, sees what you see, and helps you get things done. As Copilot becomes more optimized for Windows, it stands apart as your go-to AI companion that’s ready to be there as a sounding board and a guide when you need it.</p>
+
+
+<div class="wp-block-embed__wrapper">
+			<div class="ms-metrics-youtube-container" data-video-id="zcu8hzrTSdw" id="ms-metrics-youtube-68c81dcabe202">
+				<div class="ms-metrics-youtube-player"></div>
+			</div>
+		</div>
+
+
+<p>Copilot Vision on Windows is an all-new way to engage with your Windows PC, assisting you when needed. When you choose to enable it, Copilot Vision can see what you see and talk to you about it in real time.&nbsp; It acts as your second set of eyes, able to analyze content, help when you’re lost, provide insights, and answer your questions as you go. Whether you’re browsing, working, or deep in a project, Copilot Vision offers instant insights and answers, keeping your flow smooth and effortless.&nbsp;&nbsp;</p>
+
+
+
+<p>What brings Copilot Vision on Windows to life is the ability to navigate multiple apps at once, and have Copilot serve as a guide when you want it to. You’re now able to share two apps at a time so Copilot travels with you as you work to gain more context, connecting dots between different apps. And with Highlights, you can go a step further and ask Copilot “show me how” for a specific task and it will show you within the app where to click and what to do. Altogether, Copilot can be by your side giving you tips while playing a game, viewing your photo and showing you how to improve the lighting to make it perfect, or reviewing your travel itinerary to let you know if your packing list is sufficient based on your destination.&nbsp;&nbsp;<br>   </p>
+
+
+
+<div class="wp-block-media-text is-stacked-on-mobile"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/06/Windows-for-Vision-Final-V7-2.mp4"></video></figure><div class="wp-block-media-text__content">
+<p>To get started with Copilot Vision on Windows, open the Copilot app and click the glasses icon in your composer, select which browser window or app you want to share, and ask Copilot to help with whatever you’re working on. To stop sharing, press ‘Stop’ or ‘X’ in the composer. It’s a fully opt-in experience that always puts you at the controls.&nbsp;&nbsp;</p>
+</div></div>
+
+
+
+<p>   <br>Copilot Vision on Windows is available now in the US for Windows 10 and Windows 11, and coming to more non-European countries soon. Copilot Vision on Windows is part of <a href="https://copilot.microsoft.com/labs" target="_blank" rel="noreferrer noopener">Copilot Labs</a> as we continue to refine and enhance the experience. The Copilot on Windows app now also supports Deep Research and file search.&nbsp;&nbsp;</p>
+
+
+
+<p>This update brings Copilot even closer to being a true companion, with a deeper understanding of your goals and the ability to provide clear, step-by-step guidance to help you accomplish them. Copilot Vision on Windows is evolving, shaped by the insights and experiences of those who use it every day. We&#8217;re committed to refining and expanding its capabilities, with new features and functionality on the horizon. Try Copilot Vision on Windows <a href="https://www.microsoft.com/en-us/microsoft-copilot/for-individuals/get-copilot?&amp;form=MO12LF&amp;OCID=MO12LF" target="_blank" rel="noreferrer noopener">today</a>.&nbsp;&nbsp;&nbsp;</p>
+
+
+
+<p></p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/12/copilot-vision-on-windows-with-highlights-is-now-available-in-the-u-s/">Copilot Vision on Windows with Highlights is now available in the U.S. </a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/06/Windows-for-Vision-Final-V7-2.mp4" length="36941592" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Release Notes: June 4, 2025</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/04/release-notes-june-4-2025/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Wed, 04 Jun 2025 17:00:05 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=5315</guid>
+
+					<description><![CDATA[<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more. Try Copilot Actions — Now in Copilot Labs&#160; Let Copilot lend you a hand with everyday web tasks. Copilot Actions is a new experimental feature available to Copilot Pro users in</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/04/release-notes-june-4-2025/">Release Notes: June 4, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more.</p>
+
+
+
+<h2 class="wp-block-heading" id="try-copilot-actions-now-in-copilot-labs">Try Copilot Actions — Now in Copilot Labs&nbsp;</h2>
+
+
+
+<p>Let Copilot lend you a hand with everyday web tasks. Copilot Actions is a new experimental feature available to Copilot Pro users in the U.S., designed to help you get things done — not just find answers.&nbsp;</p>
+
+
+
+<p>With simple chat prompts, you can ask Copilot to:&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li>Book a hotel&nbsp;</li>
+
+
+
+<li>Make a dinner reservation&nbsp;</li>
+
+
+
+<li>Order flowers&nbsp;</li>
+
+
+
+<li>Find a flight&nbsp;</li>
+
+
+
+<li>Schedule a tour&nbsp;</li>
+</ul>
+
+
+
+<p>…and much more — all from your browser.&nbsp;</p>
+
+
+
+<div class="wp-block-media-text is-stacked-on-mobile" style="grid-template-columns:85% auto"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/06/anim_02_actions_v011.mp4"></video></figure><div class="wp-block-media-text__content">
+<p></p>
+</div></div>
+
+
+
+<p>Copilot works behind the scenes to complete tasks on your behalf, and you stay in control every step of the way. You can pause, stop, edit, or take over at any time.&nbsp;</p>
+
+
+
+<p>Available now in Copilot Labs on any modern browser.&nbsp;</p>
+
+
+
+<p><em>Example prompts to try:</em>&nbsp;</p>
+
+
+
+<ul class="wp-block-list">
+<li>“Order me a bouquet of flowers using 1800Flowers.com”&nbsp;</li>
+
+
+
+<li>“Book me a hotel room on Hotels.com for this weekend”&nbsp;</li>
+
+
+
+<li>“Make a dinner reservation for two at an Italian restaurant on OpenTable.com”&nbsp;</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading" id="recipes-and-instacart">Recipes and Instacart &nbsp;</h2>
+
+
+
+<p>Getting all your ingredients ready just got even easier on Copilot with Instacart. With Recipe cards, you can now directly purchase ingredients in Copilot. Simply select “Shop Ingredients on Instacart” while using Copilot on iOS, Android, the Mac app, or Copilot.com.&nbsp;</p>
+
+
+
+<p>The Recipe feature is enabled for all users — no sign-in required — and is available across all Copilot markets, making it effortless to find inspiration and shop for ingredients seamlessly. Currently, the Instacart Buy option is only available in the U.S., but it will be extending to Canada soon!&nbsp;</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/06/04/release-notes-june-4-2025/">Release Notes: June 4, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/06/anim_02_actions_v011.mp4" length="35336606" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Release Notes: May 15, 2025</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/05/15/release-notes-may-15-2025/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Thu, 15 May 2025 17:00:13 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=4911</guid>
+
+					<description><![CDATA[<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more. Upgraded 4o image generation&#160; We’ve upgraded Copilot’s image generation with 4o image generation, allowing you to create images with even richer detail and composition.&#160; With this update, Copilot also does a</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/05/15/release-notes-may-15-2025/">Release Notes: May 15, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more.</p>
+
+
+
+<h2 class="wp-block-heading" id="upgraded-4o-image-generation">Upgraded 4o image generation&nbsp;</h2>
+
+
+
+<p>We’ve upgraded Copilot’s image generation with 4o image generation, allowing you to create images with even richer detail and composition.&nbsp;</p>
+
+
+
+<p>With this update, Copilot also does a much better job of refining images based on a previous image — and now you can even upload your own image to use as a starting point, giving you more creative control and flexibility.&nbsp;</p>
+
+
+
+<p>You can try the upgraded experience today in the Copilot mobile app on iOS and Android, on Copilot.com, within Copilot in Edge, and on GroupMe.</p>
+
+
+
+<p>This experience will be available in the Windows app, Mac app, and other platforms in the coming weeks. Stay tuned!</p>
+
+
+
+<div class="wp-block-media-text is-stacked-on-mobile" style="grid-template-columns:62% auto"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/05/Copilot-Image-Gen-Sizzle-v007.mp4"></video></figure><div class="wp-block-media-text__content">
+<p></p>
+</div></div>
+
+
+
+<h2 class="wp-block-heading" id="quiz-cards-are-now-live">Quiz Cards are now live&nbsp;</h2>
+
+
+
+<p>We’re excited to announce that you can now ask Copilot to generate a quiz! Quiz Cards offer an interactive way to challenge your knowledge or to study for that test you’ve got tomorrow.&nbsp;&nbsp;&nbsp;</p>
+
+
+
+<p>Creating a quiz is easy: Just<strong> ask Copilot to create a quiz on the topic</strong>—from math, science, or history to pop culture and beyond. An example question could be something like, “Copilot, can you quiz me on limits and derivatives in calculus?”&nbsp;</p>
+
+
+
+<p>Quizzes are currently only available on <a href="https://copilot.com/" target="_blank" rel="noreferrer noopener">copilot.com</a> and the Copilot Mobile app.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="set-copilot-as-the-default-digital-assistant-on-your-android-mobile-device">Set Copilot as the default digital assistant on your Android mobile device&nbsp;&nbsp;</h2>
+
+
+
+<p>Copilot is now here to support you on your Android device, no matter where you are in the world. Whether you need help sending messages, setting timers, alarms, or even requesting a rideshare, Copilot is ready to assist from the convenience of your Android mobile device.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="new-vision-updates-for-windows-insiders">New Vision updates for Windows Insiders</h2>
+
+
+
+<p>A new update to Copilot Vision has been released and allows Copilot Vision to assist with interactive “<strong>show me how</strong>” visual guidance, highlighting exactly where to click within a shared app to help you complete tasks step-by-step. It also adds support for <strong>sharing two apps simultaneously</strong>, enabling Copilot to analyze and provide insights across both.&nbsp;&nbsp;</p>
+
+
+
+<p>These features are currently available to Windows Insiders in the U.S. and are rolling out gradually. To learn more, check out the full <a href="https://blogs.windows.com/windows-insider/2025/05/12/copilot-on-windows-windows-insiders-can-now-use-vision-with-2-apps-and-new-highlights-feature-with-1-app/" target="_blank" rel="noreferrer noopener">blog post</a>.&nbsp;</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/05/15/release-notes-may-15-2025/">Release Notes: May 15, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/05/Copilot-Image-Gen-Sizzle-v007.mp4" length="33725390" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Release Notes: May 2, 2025</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/05/02/release-notes-may-2-2025/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Fri, 02 May 2025 18:00:13 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=4755</guid>
+
+					<description><![CDATA[<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more.&#160;&#160;&#160;&#160; Copilot Pages, now available worldwide&#160; We’re thrilled to announce that Copilot Pages is now available for all signed-in users worldwide on both the Copilot desktop and mobile apps! Whether you&#8217;re drafting</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/05/02/release-notes-may-2-2025/">Release Notes: May 2, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more.&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-pages-now-available-worldwide">Copilot Pages, now available worldwide&nbsp;</h2>
+
+
+
+<p>We’re thrilled to announce that Copilot Pages is now available for all signed-in users worldwide on both the Copilot desktop and mobile apps! Whether you&#8217;re drafting a fresh idea, organizing research, or refining a final piece, with Copilot Pages, you can get AI support developing your scattered thoughts into structured brilliance.</p>
+
+
+
+<div class="wp-block-media-text is-stacked-on-mobile" style="grid-template-columns:85% auto"><figure class="wp-block-media-text__media"><video controls src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/05/Pages-1-1-v02.2_1.mp4"></video></figure><div class="wp-block-media-text__content">
+<p></p>
+</div></div>
+
+
+
+<p></p>
+
+
+
+<h2 class="wp-block-heading" id="introducing-deep-research">Introducing Deep Research&nbsp;</h2>
+
+
+
+<p>Need to tackle a complex research task on your own? Copilot’s Deep Research is here to lend a helping hand. This new feature uses one of the most powerful advanced reasoning models available to find, analyze, and synthesize comprehensive research from the web — delivering well-crafted, in-depth results that can save you hours of work.  </p>
+
+
+
+<p>Currently available in English for Pro users, with support for additional languages coming soon.</p>
+
+
+
+<h2 class="wp-block-heading" id="new-hispanic-voices-alder-and-elm-now-available">New Hispanic voices: Alder and Elm, now available&nbsp;</h2>
+
+
+
+<p>We’ve added two new Hispanic voices — Alder and Elm — to bring even more personality and warmth to your Copilot experience. Whether you&#8217;re listening to summaries, stories, or spoken responses, these new voices make interactions feel more natural and engaging.&nbsp;&nbsp;</p>
+
+
+
+<p>To try them out, just head to your Voice settings in the profile menu and choose your preferred voice. Let us know what you think!</p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-is-now-available-on-motorola-devices">Copilot is now available on Motorola devices&nbsp;</h2>
+
+
+
+<p>Copilot is now integrated into Motorola’s latest RAZR and Edge devices! As part of our new partnership with Motorola, users can invoke Copilot through Moto AI by typing or saying “Ask Copilot [<em>your question</em>]” to get started. For example, try asking:&nbsp;</p>
+
+
+
+<p>&nbsp;“<em>Ask Copilot, I have a presentation coming up — what are some ideas to kick it off and keep the audience engaged?”</em>&nbsp;&nbsp;</p>
+
+
+
+<p>Right from Moto AI, Copilot will jump in to help you brainstorm and prepare. This integration is rolling out to millions of devices globally, making it easier than ever to get help from Copilot from the convenience of your mobile device. &nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="upload-larger-files-up-to-50mb">Upload larger files — up to 50MB&nbsp;</h2>
+
+
+
+<p>You can now upload files up to 50MB in size — a big jump from the previous 5MB limit. That means larger PowerPoint presentations, PDFs, and Word documents are now supported with ease. If your file is still being processed, Copilot will let you know and continue working in the background. This new size limit will be coming soon to the Copilot mobile app in the next few weeks!&nbsp;</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/05/02/release-notes-may-2-2025/">Release Notes: May 2, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		<enclosure url="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/05/Pages-1-1-v02.2_1.mp4" length="4429879" type="video/mp4" />
+
+			</item>
+		<item>
+		<title>Introducing the Copilot Merchant Program</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/04/18/introducing-the-copilot-merchant-program/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Fri, 18 Apr 2025 17:00:10 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=4530</guid>
+
+					<description><![CDATA[<p>Interested in improving your customers’ shopping experience? With Copilot, customers have a personal shopper at their service, helping guide them towards the right items and best deals. From price alerts to instant suggestions on similar products, and check-out directly within the Copilot app, you can unlock frictionless shopping for your customers by joining Copilot’s Merchant</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/04/18/introducing-the-copilot-merchant-program/">Introducing the Copilot Merchant Program</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Interested in improving your customers’ shopping experience? With Copilot, customers have a personal shopper at their service, helping guide them towards the right items and best deals. From price alerts to instant suggestions on similar products, and check-out directly within the Copilot app, you can unlock frictionless shopping for your customers by joining Copilot’s Merchant Program.&nbsp;</p>
+
+
+
+<p>Integrate your shopping experience with Copilot to help your brand gain visibility, acquire more customers and generate sales, all from a convenient centralized location with AI support at every step.&nbsp;Once you’re in the Copilot Merchant Program you can also share key product specifications with us, ensuring we have up-to-date details on all your items, so that they are suggested to customers properly. &nbsp;</p>
+
+
+
+<p><strong>To get started, sign-up via the Copilot Merchant Interest Form located </strong><a href="https://forms.office.com/r/jvcqWsMGBu" target="_blank" rel="noreferrer noopener"><strong>here</strong></a><strong>.</strong>&nbsp;</p>
+
+
+<figure class="wp-block-image size-large"><img decoding="async" src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1-1024x683.webp" alt="Screens screenshot of a phone" class="wp-image-4641 webp-format" srcset="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1-1024x683.webp 1024w, https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1-300x200.webp 300w, https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1-768x512.webp 768w, https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1-1536x1024.webp 1536w, https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1.webp 1800w" data-orig-src="https://www.microsoft.com/en-us/microsoft-copilot/blog/wp-content/uploads/2025/04/UI_blogpost_900x600_041425-1-1024x683.webp"></figure>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/04/18/introducing-the-copilot-merchant-program/">Introducing the Copilot Merchant Program</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Release Notes: April 16, 2025</title>
+		<link>https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/04/16/release-notes-april-16-2025/</link>
+		
+		<dc:creator><![CDATA[The Copilot Team]]></dc:creator>
+		<pubDate>Wed, 16 Apr 2025 20:00:04 +0000</pubDate>
+				<category><![CDATA[News]]></category>
+		<guid isPermaLink="false">https://www.microsoft.com/en-us/microsoft-copilot/blog/?p=4621</guid>
+
+					<description><![CDATA[<p>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more.&#160;&#160;&#160;&#160; Missed Microsoft’s 50th Anniversary event? We’ve got you covered!&#160; From Copilot Vision to Deep Research, see everything announced at our 50th Anniversary event coming soon to Copilot via the Microsoft Blog.&#160;</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/04/16/release-notes-april-16-2025/">Release Notes: April 16, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p><strong>Welcome to Microsoft’s Copilot Release Notes. Here we’ll provide regular updates on what’s happening with Copilot, from new features to firmware updates and more.&nbsp;&nbsp;&nbsp;</strong>&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="missed-microsoft-s-50th-anniversary-event-we-ve-got-you-covered">Missed Microsoft’s 50<sup>th</sup> Anniversary event? We’ve got you covered!&nbsp;</h2>
+
+
+
+<p>From Copilot Vision to Deep Research, see everything announced at our 50<sup>th</sup> Anniversary event coming soon to Copilot via the <a href="https://blogs.microsoft.com/blog/2025/04/04/your-ai-companion/" target="_blank" rel="noreferrer noopener">Microsoft Blog</a>.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="copilot-labs-now-available-to-all-users">Copilot Labs, now available to all users&nbsp;</h2>
+
+
+
+<p>At <a href="https://copilot.microsoft.com/labs" target="_blank" rel="noreferrer noopener">Copilot Labs</a> you can experience Copilot’s most experimental features before they are released to the public. Now available to all users, keep an eye out for new releases on the official Copilot Labs homepage.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="enhanced-shopping-experience">Enhanced shopping experience&nbsp;</h2>
+
+
+
+<p>Users in the U.S. can now shop with ease, directly on Copilot. Dive deeper into a product&#8217;s details via the &#8220;View details&#8221; button or click anywhere on the card to see:</p>
+
+
+
+<ul class="wp-block-list">
+<li>Additional product images</li>
+
+
+
+<li>Review summary&nbsp;</li>
+
+
+
+<li>Pros and cons&nbsp;</li>
+
+
+
+<li>Product specifications&nbsp;</li>
+
+
+
+<li>Product description&nbsp;</li>
+</ul>
+
+
+
+<p>Copilot also includes a variety of capabilities designed to help you find what you’re looking for and streamline your shopping experience. These capabilities include:&nbsp;</p>
+
+
+
+<p><strong>Filter Interactions</strong>: View and select desired options from the product page if an item has multiple colors, sizes, or other attributes.&nbsp;</p>
+
+
+
+<p><strong>Buying Options</strong>: Alternative retailer offers are listed on product pages, allowing users to compare prices quickly.&nbsp;</p>
+
+
+
+<p><strong>Price Insights</strong>: Show high, low, current, and average prices for a product from the last 13 months.&nbsp;</p>
+
+
+
+<p><strong>Easier Checkout</strong>: For select retailers like eBay, Walmart, and Best Buy, users can now checkout with select items from within Copilot.</p>
+
+
+
+<h2 class="wp-block-heading" id="two-new-voices-available">Two new voices available&nbsp;</h2>
+
+
+
+<p>Birch and Rain voices are now available to try on Copilot. Check them out!</p>
+
+
+
+<h2 class="wp-block-heading" id="press-to-talk-in-copilot-for-macos">Press to talk in Copilot for MacOS&nbsp;</h2>
+
+
+
+<p>A long press of Option + Space will now activate the Press to Talk feature on your macOS device.&nbsp; Just press the keys and start talking with Copilot!&nbsp;<br>&nbsp;<br>A short press of Option + Space in macOS still launches the Copilot composer at any time. The composer on macOS has also been improved to remain small and not disrupt your workflow when you need to interact with Copilot.&nbsp;&nbsp; &nbsp;<br>&nbsp;<br>You can change the keyboard shortcut that activates these features under Settings &gt; Keyboard shortcut.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="introducing-phone-connection-1">Introducing phone connection&nbsp;</h2>
+
+
+
+<p>With phone connection, Copilot on PC can now connect to your Android device, making it easier to stay on top of your day by setting alarms, creating reminders, sending and receiving messages, getting navigation help, and more.&nbsp;&nbsp;</p>
+
+
+
+<p>Ready to get started? Learn how to connect your phone <a href="https://support.microsoft.com/en-us/topic/using-phone-connection-in-microsoft-copilot-with-your-android-device-9e7182b4-22b8-4940-ae24-7b3be04bb646" target="_blank" rel="noreferrer noopener">here</a>.&nbsp;</p>
+
+
+
+<h2 class="wp-block-heading" id="increased-visuals-in-responses">Increased visuals in responses&nbsp;</h2>
+
+
+
+<p>We&#8217;re continuing to enhance the visuals in Copilot’s responses. Weather Cards, Finance Cards, more Sports Cards (Baseball, Hockey, and Cricket), and short-form videos have been added. Please note: availability of new visuals may vary by surface.</p>
+<p>The post <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/2025/04/16/release-notes-april-16-2025/">Release Notes: April 16, 2025</a> appeared first on <a href="https://www.microsoft.com/en-us/microsoft-copilot/blog">Microsoft Copilot Blog</a>.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -198,6 +198,49 @@
 
 ---
 
+## Pythonを利用する場合はuvコマンドを利用すること (use uv for Python)
+
+- ライブラリは uv を統一的に利用すること。メリットは環境を汚さずに使えることです。
+- ライブラリが必要な場合はインストール前に uv pip show でインストール済みか確認してください。
+```
+uv pip show numpy pandas
+```
+
+### uv の使い方
+
+- スクリプトやコマンドを仮想環境で実行
+```
+uv run python script.py
+uv run hello.py
+uv run pytest tests/
+uv run ruff check
+```
+
+- プロジェクト環境でCLIツールやシェルスクリプトも実行可能
+```
+uv run bash scripts/foo.sh
+uv run example-cli foo
+```
+
+- パッケージ追加・削除
+```
+uv add numpy pandas
+uv remove numpy
+```
+
+### uv 利用時の注意事項
+
+- OneDrive 等クラウド同期フォルダはハードリンクをサポートしていません。そのため、os error 396（incompatible hardlinks）となりインストールに失敗することがあります。
+- 対処法として、ハードリンクではなくコピーを強制することで問題を回避できます。
+- 常に --link-mode=copy を使用してください。
+```
+uv run --link-mode=copy script.py
+または
+set UV_LINK_MODE=copy && uv run python script.py
+```
+
+---
+
 ## コマンド (Commands)
 
 - generateDocument: 作業したコードを整理して、余計な部分を取り除き、とても分かりやすくドキュメント化してください。
