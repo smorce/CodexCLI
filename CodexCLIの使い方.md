@@ -13,6 +13,8 @@ gh auth switch --user smorce
 
 # SOW の作成をしたらNEXTステップに進む前に、その都度確認を入れてもらうように AGENTS.md で指示している
 
+go on で指示する。
+
 # Codex × DeepResearch
 
 https://x.com/hirokaji_/status/1960708835892674769?s=12
