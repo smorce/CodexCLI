@@ -1,61 +1,59 @@
-﻿# Microsoft Copilot Studio Agent Development - Research Brief (2025-09-21)
+﻿# Microsoft Copilot Studio エージェント開発 - 調査ブリーフ (2025-09-21)
 
-## Executive Summary
-- Microsoft is closing the gap between advanced agent autonomy and enterprise controls by rolling out near-real-time protection hooks, richer telemetry, and hardened connector governance in September 2025.
-- Security remains multi-layered: Entra ID tenant isolation, data residency guarantees, CMK encryption, and configurable knowledge-source policies form the baseline that teams must wire into every build.
-- GTM and licensing updates signal Copilot Studio's graduation from Power Platform pricing, reinforcing usage-based cost models that mid-level engineers must forecast when proposing new agents.
-- Environment strategy is shifting toward personal developer environments (PDEs) and managed environments so experimentation and production can be isolated without slowing maker velocity.
-- GPT-5 availability and multi-channel publishing (e.g., WhatsApp) expand design space, but raise the bar for validation pipelines and observability to keep pace with model routing and new surfaces.
+## エグゼクティブサマリー
+- Microsoft は 2025 年 9 月にリアルタイムに近い保護フック、より豊富なテレメトリ、強化されたコネクタグバナンスを導入し、高度なエージェント自律性とエンタープライズ統制とのギャップを縮めている。
+- セキュリティは多層防御を維持しており、Entra ID テナント分離、データレジデンシ保証、CMK 暗号化、構成可能なナレッジソースポリシーがベースラインであり、チームはすべてのビルドにこれらを組み込まなければならない。
+- GTM とライセンシングの更新は Copilot Studio が Power Platform の価格体系から卒業したことを示し、使用量ベースのコストモデルが強化されたため、新しいエージェントを提案する際には中堅エンジニアも消費予測を行う必要がある。
+- 環境戦略は個人開発環境 (PDE) とマネージド環境にシフトしており、実験と本番を分離しつつメイカーの速度を損なわない形を目指している。
+- GPT-5 の利用可能性と WhatsApp などのマルチチャネル公開は設計空間を広げる一方で、モデルルーティングや新しいサーフェスに対応する検証パイプラインと可観測性の高度化が求められている。
 
-## Key Findings
-- Advanced runtime protection (public preview, Sep 8, 2025) now lets administrators plug Copilot Studio agents into Microsoft Defender or third-party security platforms that can veto unsafe plans in under a second, providing bring-your-own-protection controls plus granular audit logs for agent actions.citeturn1search1
-- Build 2025 managed security enhancements (FIC for agents, advanced connector policies, network isolation, XPIA/Jailbreak auditing) are landing as GA + preview capabilities, hardening agent lifecycle from registration to runtime data masking.citeturn4search5
-- Security FAQs reaffirm that every new agent is scoped to a single-tenant Entra ID app registration, data stays in-region, out-of-box auditing flows through Purview, and CMK encryption can be toggled per environment-baseline guardrails for any project.citeturn1search0
-- Microsoft's September 2025 PDE guidance highlights the company's own migration to user-specific environments, reporting 32% month-over-month growth in governed maker assets while keeping compliance boundaries intact.citeturn4search3
-- Community recaps emphasize five practical rollout steps-validating security enhancements, leveraging agent replay, and monitoring analytics-mirroring priorities for production readiness.citeturn3search0
-- Partners are framing GPT-5 integration, auto-routing across models, and WhatsApp publishing as the headline Copilot Studio capabilities to operationalize in September 2025, underscoring the need for evaluation pipelines that test multi-modal agents.citeturn4search1
-- Licensing analysis shows Copilot Studio has moved into a dedicated guide while retaining usage-based billing (messages, AI tool calls, API usage), so engineering teams must embed burn-rate telemetry into deployment dashboards.citeturn4search0
+## 主な知見
+- 高度なランタイム保護（2025 年 9 月 8 日パブリックプレビュー）は、管理者が Copilot Studio エージェントを Microsoft Defender やサードパーティのセキュリティプラットフォームに接続し、1 秒未満で危険なプランを拒否できるようにし、持ち込み型保護制御と詳細な監査ログを提供する。citeturn1search1
+- Build 2025 のマネージドセキュリティ強化（エージェント向け FIC、高度なコネクタポリシー、ネットワーク分離、XPIA/Jailbreak 監査）は GA とプレビュー機能として順次提供され、登録からランタイムでのデータマスキングまでエージェントのライフサイクルを堅牢化している。citeturn4search5
+- セキュリティ FAQ は、すべての新しいエージェントが単一テナントの Entra ID アプリ登録に紐づき、データは地域内にとどまり、監査は標準で Purview に流れ、CMK 暗号化を環境単位で有効化できることを再確認しており、あらゆるプロジェクトのガードレールとなる。citeturn1search0
+- Microsoft が 2025 年 9 月に公開した PDE ガイダンスは、ユーザー単位の環境への移行を強調し、ガバナンス下のメイカー資産が月次で 32% 増加しつつコンプライアンス境界を維持できたことを報告している。citeturn4search3
+- コミュニティによるまとめは、セキュリティ強化の検証、エージェントリプレイの活用、分析モニタリングなど 5 つの実践的な展開ステップを強調しており、本番導入の優先事項と一致している。citeturn3search0
+- パートナー各社は GPT-5 連携、モデル自動ルーティング、WhatsApp への公開を 2025 年 9 月の Copilot Studio で運用すべき主要機能として位置づけており、マルチモーダルエージェントをテストする評価パイプラインの重要性が増している。citeturn4search1
+- ライセンス分析によれば、Copilot Studio は専用ガイドに移行しつつ、メッセージ数・AI ツール呼び出し・API 利用量に基づく従量課金を維持しているため、エンジニアリングチームはデプロイメントダッシュボードに消費テレメトリを組み込む必要がある。citeturn4search0
 
-## Deep Dive
-### 1. Security Controls Maturing in September 2025
-The new advanced runtime protection flow injects external security systems into the agent execution path. Engineers must surface agent intent payloads (prompt, tools, metadata) to those systems, handle one-second decision SLAs, and design fallback behaviors when requests are denied. This enables policy-driven kill switches and near-real-time alerting for sensitive operations.citeturn1search1
+## 詳細分析
+### 1. 2025 年 9 月に成熟するセキュリティ制御
+新しい高度なランタイム保護フローは、エージェント実行パスに外部セキュリティシステムを組み込み、エージェントの意図ペイロード（プロンプト、ツール、メタデータ）を提示し、1 秒の意思決定 SLA を満たしつつ拒否時のフォールバック動作を設計することを求める。これにより、ポリシーベースの緊急停止とサブ秒の警告が敏感な操作にも適用できる。citeturn1search1
 
-The managed security wave (FIC, ACP, network isolation, data masking, declarative agent deletion, XPIA/Jailbreak logs) means pipelines must rotate secrets through federated credentials, enforce connector allowlists per environment group, and extend monitoring dashboards to highlight anomalous prompt-injection activity.citeturn4search5
+マネージドセキュリティの波（FIC、ACP、ネットワーク分離、データマスキング、宣言的なエージェント削除、XPIA/Jailbreak ログ）は、フェデレーテッド資格情報によるシークレットローテーション、環境グループ単位のコネクタ許可リスト、異常なプロンプトインジェクションを可視化する監視ダッシュボードの拡張をパイプラインに組み込むことを要求している。citeturn4search5
 
-### 2. Governance & Environment Strategy
-Microsoft's PDE rollout demonstrates a scalable pattern: default environment for experimentation is replaced with user-scoped PDEs feeding managed environments, allowing rapid maker iteration while preserving compliance. Adoption metrics (32% MoM growth) suggest mid-level engineers should champion PDE enablement, automation for environment creation, and promotion workflows that keep prod isolated.citeturn4search3
+### 2. ガバナンスと環境戦略
+Microsoft の PDE 展開はスケーラブルなパターンを示している。実験用の既定環境をユーザー単位の PDE に置き換え、そこからマネージド環境に昇格させることで、メイカーの反復を高速化しながらコンプライアンスを維持できる。月次 32% の採用増加は、中堅エンジニアが PDE の有効化、環境作成の自動化、本番を隔離する昇格ワークフローを推進すべきであることを示唆する。citeturn4search3
 
-Security FAQ guidance should be codified as policy-as-code: enforce single-tenant app registrations, verify data residency, configure CMK where regulatory requirements demand, and use data policies to restrict knowledge sources per environment.citeturn1search0
+セキュリティ FAQ の指針はポリシー・アズ・コードとして定式化すべきであり、単一テナントのアプリ登録を強制し、データレジデンシを検証し、規制要件がある場合は CMK を構成し、環境ごとにナレッジソースを制限するデータポリシーを設定する。citeturn1search0
 
-Community field notes map nicely to Tidy First principles-validate managed security enhancements early, pilot agent replay to de-risk journeys, and instrument analytics before production promotion.citeturn3search0
+コミュニティの現場ノートは Tidy First の原則と親和性が高く、マネージドセキュリティ強化の早期検証、エージェントリプレイのパイロット、本番昇格前の分析計測といった手順を推奨している。citeturn3search0
 
-### 3. Feature & Model Roadmap Implications
-GPT-5 support, intelligent auto-routing, and broader channel publishing (WhatsApp) expand test matrices. Partner guidance recommends updating evaluation pipelines to exercise multi-model routing and cross-channel compliance, ensuring conversation transcripts feed into the enhanced analytics stack.citeturn4search1
+### 3. 機能とモデルのロードマップへの示唆
+GPT-5 対応、インテリジェントな自動ルーティング、WhatsApp などのチャネル拡張によってテスト行列は拡大する。パートナーのガイダンスは、マルチモデルルーティングとチャネル横断コンプライアンスを検証するために評価パイプラインを更新し、会話トランスクリプトを強化された分析スタックに取り込むことを推奨している。citeturn4search1
 
-Licensing separation underscores the importance of telemetry for consumption: instrument message counts, tool invocations, and API usage to give stakeholders financial visibility and align with usage-based billing.citeturn4search0
+ライセンスの切り離しは、消費状況を可視化するテレメトリの重要性を強調する。メッセージ数、ツール呼び出し、API 使用量を計測し、ステークホルダーに従量課金の状況を共有できるようにする必要がある。citeturn4search0
 
-## Risks & Open Issues
-- **Policy Drift:** Without automated checks, connector allowlists and ACP rules can diverge across environments, reintroducing exfiltration risk.citeturn4search5
-- **Runtime Protection Coverage:** External security systems must keep pace with new tools and action schemas; gaps can bypass the protection layer.citeturn1search1
-- **Environment Sprawl:** PDE proliferation demands lifecycle automation (creation, inactivity cleanup) or governance overhead will spike.citeturn4search3
-- **Cost Visibility:** Usage-based billing without telemetry risks budget overruns once agents scale.citeturn4search0
-- **Model Upgrades:** GPT-5 and auto-routing introduce regression risk if prompt and evaluation suites lag behind feature rollout.citeturn4search1
+## リスクと未解決課題
+- **ポリシードリフト:** 自動チェックがなければ、コネクタ許可リストや ACP ルールが環境間で乖離し、データ流出リスクが再発する。citeturn4search5
+- **ランタイム保護の網羅性:** 外部セキュリティシステムが新しいツールやアクションスキーマに追随できない場合、保護レイヤーを迂回される恐れがある。citeturn1search1
+- **環境スプロール:** PDE の急増には環境ライフサイクル（作成、非アクティブ化時のクリーンアップ）の自動化が必要で、さもないとガバナンス負荷が急増する。citeturn4search3
+- **コストの可視性:** 従量課金に対してテレメトリが不足すると、エージェントがスケールした際に予算超過を招きかねない。citeturn4search0
+- **モデルアップグレード:** GPT-5 と自動ルーティングは、プロンプトと評価スイートが機能リリースに追随できない場合に回帰リスクをもたらす。citeturn4search1
 
-## Recommendations (Mid-level Engineers)
-1. Automate runtime protection integration: expose agent plans to Defender or approved SIEM, enforce one-second response handling, and capture outcomes for monitoring dashboards.citeturn1search1
-2. Embed FIC issuance, ACP configuration, and XPIA/Jailbreak alert ingestion into CI/CD pipelines so managed security enhancements stay enforced across environments.citeturn4search5
-3. Codify environment strategy: provision PDEs via infrastructure-as-code, script promotion paths into managed Sandbox/Prod, and align data policies + CMK settings per environment.citeturn4search3turn1search0
-4. Expand regression suites for GPT-5 and WhatsApp publishing, capturing transcript analytics to validate routing logic and channel compliance.citeturn4search1
-5. Instrument usage telemetry (messages, tool calls, API hits) and surface cost dashboards to keep stakeholders informed under the dedicated licensing guide.citeturn4search0
-6. Run pre-production drills with agent replay and analytics as recommended by community field guides to catch prompt-injection or workflow regressions early.citeturn3search0
+## 推奨事項（中堅エンジニア向け）
+1. ランタイム保護統合を自動化し、エージェントプランを Defender または承認済み SIEM に公開し、1 秒応答の処理と結果のダッシュボード記録を徹底する。citeturn1search1
+2. FIC の発行、ACP 設定、XPIA/Jailbreak アラートの取り込みを CI/CD パイプラインに組み込み、マネージドセキュリティ強化が全環境で維持されるようにする。citeturn4search5
+3. 環境戦略をコード化し、PDE を IaC でプロビジョニングし、サンドボックス/本番への昇格パスをスクリプト化し、環境ごとにデータポリシーと CMK 設定を整合させる。citeturn4search3turn1search0
+4. GPT-5 と WhatsApp 公開向けの回帰スイートを拡充し、トランスクリプト分析を取り込んでルーティングロジックとチャネルコンプライアンスを検証する。citeturn4search1
+5. メッセージ、ツールコール、API ヒットの使用テレメトリを計測し、専用ライセンスガイドに基づくコストダッシュボードをステークホルダーに提供する。citeturn4search0
+6. コミュニティが推奨するエージェントリプレイと分析を使ったプレプロダクション演習を実施し、プロンプトインジェクションやワークフローの回帰を早期に発見する。citeturn3search0
 
-## References
-- Microsoft Copilot Blog - "Strengthen agent security with real-time protection in Microsoft Copilot Studio" (2025-09-08).citeturn1search1
-- Microsoft Copilot Blog - "Announcing managed security enhancements for Microsoft Copilot Studio" (2025-05-19).citeturn4search5
-- Microsoft Learn - "Security FAQs for Copilot Studio" (2025-04-07).citeturn1search0
-- Microsoft Power Platform Blog - "Personal Developer Environments: Secure, governed innovation in Power Platform" (2025-09-18).citeturn4search3
-- HubSite365 - "Five Must-Know Updates for Copilot Studio - September 2025" (2025-09-15).citeturn3search0
-- AlfaPeople - "Highlights and news about Microsoft Business Applications September 2025" (2025-09-12).citeturn4search1
-- VisualLabs - "Copilot Studio is no longer licensed under Power Platform" (2025-07-02).citeturn4search0
-
-
+## 参考文献
+- Microsoft Copilot Blog - "Strengthen agent security with real-time protection in Microsoft Copilot Studio" (2025-09-08)。citeturn1search1
+- Microsoft Copilot Blog - "Announcing managed security enhancements for Microsoft Copilot Studio" (2025-05-19)。citeturn4search5
+- Microsoft Learn - "Security FAQs for Copilot Studio" (2025-04-07)。citeturn1search0
+- Microsoft Power Platform Blog - "Personal Developer Environments: Secure, governed innovation in Power Platform" (2025-09-18)。citeturn4search3
+- HubSite365 - "Five Must-Know Updates for Copilot Studio - September 2025" (2025-09-15)。citeturn3search0
+- AlfaPeople - "Highlights and news about Microsoft Business Applications September 2025" (2025-09-12)。citeturn4search1
+- VisualLabs - "Copilot Studio is no longer licensed under Power Platform" (2025-07-02)。citeturn4search0
