@@ -6,5 +6,14 @@ npm install -g @openai/codex@latest
 codex -m gpt-5-codex --yolo -c model_reasoning_effort="high" --search "$@"
 
 # 指示の出し方
-Please read prompts/Instructions.md
+prompts/Instructions.md を読んで、そこに書いてある制約条件を守りながら指示を実行してください。 英語が分からないので、今後の出力は日本語でお願いします。
+--------------------------------
+gh auth switch --user smorce
+してから、今の変更をコミットしてリポジトリ(https://github.com/smorce/CodexCLI)にPUSHしてください。ブランチも適切に対応して必要に応じてマージしてください。
 
+# SOW の作成をしたらNEXTステップに進む前に、その都度確認を入れてもらうように AGENTS.md で指示している
+
+# Codex × DeepResearch
+
+https://x.com/hirokaji_/status/1960708835892674769?s=12
+“ローカルで Deep Research→資料化まで一直線”を、Codex CLI v0.24.0 の新機能（Web検索・画像ドラッグ&ドロップ・キューイング）前提で一発起動できるコピペ用プロンプトに落とし込みました。最初に最小セットアップ→本体プロンプト→非対話（定期実行）用の順で置いておきます。
