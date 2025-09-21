@@ -11,6 +11,9 @@ prompts/Instructions.md を読んで、そこに書いてある制約条件を�
 gh auth switch --user smorce
 してから、今の変更をコミットしてリポジトリ(https://github.com/smorce/CodexCLI)にPUSHしてください。ブランチも適切に対応して必要に応じてマージしてください。
 
+あと、長文は右クリックで貼り付けできた。
+
+
 # SOW の作成をしたらNEXTステップに進む前に、その都度確認を入れてもらうように AGENTS.md で指示している
 
 go on で指示する。
