@@ -63,6 +63,13 @@ jobs:
             "構造的変更（リファクタリング）と振る舞いの変更（機能追加）は別々のコミットに分離してください。" \
             "最後に 'npm run build && npm test' を実行してエラーが出ないことを確認してください。.gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
           
+          echo "Preparing Codex config (reasoning=high)..."
+          mkdir -p ~/.codex
+          cat > ~/.codex/config.toml <<'TOML'
+          model = "gpt-5"
+          model_reasoning_effort = "high"
+          TOML
+
           echo "Executing Codex with prompt..."
           # 非対話環境向けの環境変数を設定
           export CI=true
