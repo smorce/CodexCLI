@@ -57,14 +57,18 @@ jobs:
           PROMPT="$(printf '%s\n\n%s\n\n%s\n%s\n%s\n%s' \
             "$ISSUE_TITLE" \
             "$ISSUE_BODY" \
-            "このプロジェクトはTopTenFrontierというマイクロサービスアーキテクチャです。" \
+            "このプロジェクトはマイクロサービスアーキテクチャです。" \
             "TDD（Red-Green-Refactor）とTidy First原則を厳格に遵守してください。" \
             "構造的変更（リファクタリング）と振る舞いの変更（機能追加）は別々のコミットに分離してください。" \
             "最後に 'npm run build && npm test' を実行してエラーが出ないことを確認してください。.gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
           
           echo "Executing Codex with prompt..."
-          # Codex CLIを実行（承認ダイアログを表示しない・TTY非依存でSTDINから入力）
-          printf "%s" "$PROMPT" | codex --ask-for-approval never
+          # 非対話環境向けの環境変数を設定
+          export CI=true
+          export TERM=dumb
+
+          # Codex CLIを実行（フルオート・非対話）
+          codex -a full-auto --ask-for-approval never "$PROMPT"
 
           # 変更があるかチェック
           if [[ -n $(git status --porcelain) ]]; then
