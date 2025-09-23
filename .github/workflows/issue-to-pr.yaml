@@ -121,18 +121,19 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
           BRANCH="codex/issue-${{ github.event.issue.number }}"
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_NUMBER="${{ github.event.issue.number }}"
 
-          # fetch latest base to be safe
+          # fetch latest base
           git fetch origin main
 
           AHEAD=$(git rev-list --count origin/main..HEAD)
           if [ "$AHEAD" -eq 0 ]; then
             echo "No commits between origin/main and $BRANCH — skipping PR creation."
 
-            # optional: post a comment to the issue explaining nothing changed
+            # explain in issue
             : > issue-comment.md
             printf '%s\n' \
               '🤖 自動実装を試行しましたが、リポジトリに変更は見つかりませんでした。' \
@@ -141,12 +142,34 @@ jobs:
               > issue-comment.md
 
             gh issue comment ${ISSUE_NUMBER} --body-file issue-comment.md
+            # ensure no pr-url.txt is left over
+            rm -f pr-url.txt || true
             exit 0
           fi
 
-          # 変更がある場合のみ PR 作成
+          # Create PR body file (ensure this file exists before calling gh pr create)
+          : > pr-body.md
+          printf '%s\n' \
+            '## 概要' \
+            "このPRは Issue #${ISSUE_NUMBER} の自動実装です。" \
+            '' \
+            '## 変更内容' \
+            '- Codex CLI による自動実装' \
+            '- TDD原則に基づく実装' \
+            '' \
+            '## 関連Issue' \
+            "Closes #${ISSUE_NUMBER}" \
+            > pr-body.md
+
           PR_TITLE="feat: #${ISSUE_NUMBER} - ${ISSUE_TITLE}"
+
+          # Create the PR (gh uses GH_TOKEN from env)
           gh pr create --title "$PR_TITLE" --body-file pr-body.md --base main --head "$BRANCH" --label "codex"
+
+          # Get URL of the PR we just created (use gh pr view to query it)
+          PR_URL=$(gh pr view --json url --jq '.url')
+          echo "PR_URL=${PR_URL}" > pr-url.txt
+          echo "Created PR: ${PR_URL}"
 
       - name: Add comment to issue
         env:
