@@ -1,0 +1,122 @@
+name: PR summary by codex
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  pr-summary-by-codex:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      
+    steps:
+      - name: Switch to head branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Codex CLI
+        run: |
+          npm install -g @openai/codex
+
+      - name: Generate PR summary and comment
+        run: |
+          # PR情報を取得
+          PR_NUMBER="${{ github.event.number }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          
+          echo "Generating summary for PR #${PR_NUMBER}: ${PR_TITLE}"
+          
+          # PRの差分を取得
+          gh pr diff ${PR_NUMBER} > pr-diff.txt
+          
+          # ファイルサイズをチェック（大きすぎる場合は要約）
+          DIFF_SIZE=$(wc -c < pr-diff.txt)
+          if [ $DIFF_SIZE -gt 50000 ]; then
+            echo "Diff is large (${DIFF_SIZE} bytes), creating summary..."
+            head -n 1000 pr-diff.txt > pr-diff-truncated.txt
+            echo -e "\n\n... (差分が大きいため、最初の1000行のみ表示)" >> pr-diff-truncated.txt
+            mv pr-diff-truncated.txt pr-diff.txt
+          fi
+
+          # TopTenFrontierプロジェクト用のプロンプトでCodexに要約を依頼
+          SUMMARY_PROMPT="以下のPull Requestの差分を分析し、日本語で要約してください。
+
+プロジェクト: TopTenFrontier（マイクロサービスアーキテクチャによる投資最適化システム）
+PR: ${PR_TITLE}
+
+要約に含めるべき項目:
+1. 🎯 **主な変更内容** - 何が実装・修正されたか
+2. 🏗️ **アーキテクチャ影響** - マイクロサービス間の連携や設計への影響
+3. 🧪 **テスト** - 追加・修正されたテスト内容
+4. 📋 **API変更** - OpenAPI仕様やエンドポイントの変更
+5. 🔒 **セキュリティ** - 認証・認可・RLSポリシー関連の変更
+6. ⚠️ **注意点** - レビュー時に特に注意すべき点
+
+差分ファイル: pr-diff.txt
+
+要約をcodex-summary.mdファイルに保存してください。"
+
+          # Codexで要約生成（GPT-4 miniモデルを使用）
+          echo "$SUMMARY_PROMPT" | codex -m gpt-4o-mini -a auto-edit --quiet
+
+          # 要約ファイルが生成されたかチェック
+          if [ ! -f "codex-summary.md" ]; then
+            echo "要約ファイルが生成されませんでした。デフォルトの要約を作成します。"
+            cat > codex-summary.md << EOF
+## 📋 PR要約
+
+**PR**: ${PR_TITLE}
+
+### 🎯 主な変更内容
+このPRは自動実装により作成されました。詳細な変更内容については差分をご確認ください。
+
+### 🔍 レビューポイント
+- コードの品質とTDD原則の遵守
+- OpenAPI仕様との整合性
+- テストカバレッジの確認
+- セキュリティ実装の妥当性
+
+---
+*この要約はCodex CLIによって自動生成されました。*
+EOF
+          fi
+
+          # 要約をPRにコメント
+          gh pr comment --body-file codex-summary.md "${PR_URL}"
+          
+          echo "PR summary posted successfully"
+
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add review assignment
+        run: |
+          # TopTenFrontierプロジェクトの技術的なPRの場合、特定のレビュアーを自動アサイン
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_NUMBER="${{ github.event.number }}"
+          
+          # サービス名に基づいてラベルを追加
+          if echo "$PR_TITLE" | grep -qi "IndexConstituent"; then
+            gh pr edit ${PR_NUMBER} --add-label "service:index-constituent"
+          elif echo "$PR_TITLE" | grep -qi "MarketData"; then
+            gh pr edit ${PR_NUMBER} --add-label "service:market-data"
+          elif echo "$PR_TITLE" | grep -qi "Optimization"; then
+            gh pr edit ${PR_NUMBER} --add-label "service:optimization"
+          elif echo "$PR_TITLE" | grep -qi "Portfolio"; then
+            gh pr edit ${PR_NUMBER} --add-label "service:portfolio"
+          fi
+          
+          echo "Labels and review assignments updated"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

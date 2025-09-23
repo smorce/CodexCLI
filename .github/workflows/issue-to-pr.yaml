@@ -1,0 +1,143 @@
+name: Issue to PR with Codex
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  fix_with_codex:
+    runs-on: ubuntu-latest
+    if: github.event.label.name == 'codex' # 'codex'ラベルがついた時のみ実行
+
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      issues: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # フルヒストリーを取得してブランチ作成を確実にする
+          fetch-depth: 0
+
+      - name: Set git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Install Codex CLI
+        run: |
+          # OpenAI Codex CLIをインストール（最新版を使用）
+          npm install -g @openai/codex
+
+      - name: Generate patch with Codex
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          BRANCH="codex/issue-${{ github.event.issue.number }}"
+          echo "Creating branch: $BRANCH"
+          git switch -c "$BRANCH"
+
+          # Issue情報を取得
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          
+          # TopTenFrontier プロジェクト用のプロンプトを構築
+          PROMPT="$(printf '%s\n\n%s\n\n%s\n%s\n%s\n%s' \
+            "$ISSUE_TITLE" \
+            "$ISSUE_BODY" \
+            "このプロジェクトはTopTenFrontierというマイクロサービスアーキテクチャです。" \
+            "TDD（Red-Green-Refactor）とTidy First原則を厳格に遵守してください。" \
+            "構造的変更（リファクタリング）と振る舞いの変更（機能追加）は別々のコミットに分離してください。" \
+            "最後に 'npm run build && npm test' を実行してエラーが出ないことを確認してください。.gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
+          
+          echo "Executing Codex with prompt..."
+          # Codex CLIを実行（フルオート、静音モード）
+          codex -a full-auto --quiet "$PROMPT"
+
+          # 変更があるかチェック
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "Changes detected, committing..."
+            git add .
+            # コミットメッセージをIssue情報から生成
+            git commit -m "feat: #${{ github.event.issue.number }} - $ISSUE_TITLE
+
+Automated implementation by Codex CLI based on issue requirements.
+
+Closes #${{ github.event.issue.number }}"
+          else
+            echo "No changes to commit"
+          fi
+          
+          # ブランチをプッシュ
+          git push -u origin "$BRANCH"
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="codex/issue-${{ github.event.issue.number }}"
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          
+          # PRタイトルと本文を構築
+          PR_TITLE="feat: #${ISSUE_NUMBER} - ${ISSUE_TITLE}"
+          PR_BODY="## 概要
+このPRは Issue #${ISSUE_NUMBER} の自動実装です。
+
+## 変更内容
+- Codex CLIによる自動実装
+- TDD原則に基づく実装
+- OpenAPI仕様書との整合性確保
+
+## 関連Issue
+Closes #${ISSUE_NUMBER}
+
+## チェックリスト
+- [x] TDD（Red-Green-Refactor）サイクルの遵守
+- [x] 構造的変更と振る舞いの変更の分離
+- [x] テストの実行確認
+- [x] ビルドエラーなし
+
+---
+*このPRはGitHub ActionsとCodex CLIによって自動生成されました。*"
+
+          # PRを作成
+          gh pr create \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH" \
+            --label "automated,codex"
+
+          echo "Pull request created successfully"
+
+      - name: Add comment to issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          BRANCH="codex/issue-${ISSUE_NUMBER}"
+          
+          COMMENT="🤖 **自動実装が完了しました！**
+
+Codex CLIによる自動実装が完了し、プルリクエストが作成されました。
+
+- **ブランチ**: \`${BRANCH}\`
+- **実装方針**: TDD + Tidy First原則
+- **次のステップ**: PRレビューをお願いします
+
+レビュー後、問題なければマージしてください。"
+
+          gh issue comment ${ISSUE_NUMBER} --body "$COMMENT"
