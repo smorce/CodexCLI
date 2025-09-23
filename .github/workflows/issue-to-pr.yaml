@@ -38,12 +38,26 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci
+          set -euo pipefail
+          npm config set registry https://registry.npmjs.org/
+          npm config set fetch-retries 5
+          npm config set fetch-retry-factor 2
+          npm config set fetch-retry-mintimeout 10000
+          npm config set fetch-retry-maxtimeout 120000
+          retry() { n=0; until [ $n -ge 5 ]; do "$@" && break; n=$((n+1)); echo "npm retry $n"; sleep $((n*5)); done; }
+          retry npm ci --no-audit --no-fund
 
       - name: Install Codex CLI
         run: |
-          # OpenAI Codex CLIをインストール（最新版を使用）
-          npm install -g @openai/codex
+          set -euo pipefail
+          # OpenAI Codex CLIをインストール（最新版を使用） with retries
+          npm config set registry https://registry.npmjs.org/
+          npm config set fetch-retries 5
+          npm config set fetch-retry-factor 2
+          npm config set fetch-retry-mintimeout 10000
+          npm config set fetch-retry-maxtimeout 120000
+          retry() { n=0; until [ $n -ge 5 ]; do npm install -g @openai/codex && break; n=$((n+1)); echo "codex install retry $n"; sleep $((n*5)); done; }
+          retry true
 
       - name: Preflight: Check OpenAI API key and reachability
         id: preflight
