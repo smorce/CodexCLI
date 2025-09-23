@@ -69,7 +69,7 @@ jobs:
           export TERM=dumb
 
           # Codex CLIを実行（フルオート・非対話）
-          codex exec --full-auto --quiet "$PROMPT" < /dev/null
+          codex exec --full-auto "$PROMPT" < /dev/null
 
           # 変更があるかチェック
           if [[ -n $(git status --porcelain) ]]; then
