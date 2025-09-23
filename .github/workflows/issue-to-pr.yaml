@@ -4,6 +4,10 @@ on:
   issues:
     types: [labeled]
 
+permissions:
+  contents: write          # push/branch作成に必要
+  pull-requests: write     # PRの作成に必要
+
 jobs:
   fix_with_codex:
     runs-on: ubuntu-latest
