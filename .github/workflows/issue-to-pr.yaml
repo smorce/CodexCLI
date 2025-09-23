@@ -127,7 +127,7 @@ jobs:
             --body-file pr-body.md \
             --base main \
             --head "$BRANCH" \
-            --label "automated,codex"
+            --label "codex"
 
           echo "Pull request created successfully"
 
