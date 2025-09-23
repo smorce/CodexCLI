@@ -117,50 +117,36 @@ jobs:
           # ブランチをプッシュ
           git push -u origin "$BRANCH"
 
-      - name: Create Pull Request
+      - name: Create Pull Request (only if changes)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BRANCH="codex/issue-${{ github.event.issue.number }}"
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_NUMBER="${{ github.event.issue.number }}"
-          
-          # PRタイトルと本文を構築
+
+          # fetch latest base to be safe
+          git fetch origin main
+
+          AHEAD=$(git rev-list --count origin/main..HEAD)
+          if [ "$AHEAD" -eq 0 ]; then
+            echo "No commits between origin/main and $BRANCH — skipping PR creation."
+
+            # optional: post a comment to the issue explaining nothing changed
+            : > issue-comment.md
+            printf '%s\n' \
+              '🤖 自動実装を試行しましたが、リポジトリに変更は見つかりませんでした。' \
+              '' \
+              'Codex は変更を生成しなかったため、プルリクエストは作成されませんでした。' \
+              > issue-comment.md
+
+            gh issue comment ${ISSUE_NUMBER} --body-file issue-comment.md
+            exit 0
+          fi
+
+          # 変更がある場合のみ PR 作成
           PR_TITLE="feat: #${ISSUE_NUMBER} - ${ISSUE_TITLE}"
-          
-          # PR本文をファイルに書き出し（heredocを避けてprintfで生成）
-          : > pr-body.md
-          printf '%s\n' \
-            '## 概要' \
-            "このPRは Issue #${ISSUE_NUMBER} の自動実装です。" \
-            '' \
-            '## 変更内容' \
-            '- Codex CLIによる自動実装' \
-            '- TDD原則に基づく実装' \
-            '- OpenAPI仕様書との整合性確保' \
-            '' \
-            '## 関連Issue' \
-            "Closes #${ISSUE_NUMBER}" \
-            '' \
-            '## チェックリスト' \
-            '- [x] TDD（Red-Green-Refactor）サイクルの遵守' \
-            '- [x] 構造的変更と振る舞いの変更の分離' \
-            '- [x] テストの実行確認' \
-            '- [x] ビルドエラーなし' \
-            '' \
-            '---' \
-            '*このPRはGitHub ActionsとCodex CLIによって自動生成されました。*' \
-            > pr-body.md
-
-          # PRを作成
-          gh pr create \
-            --title "$PR_TITLE" \
-            --body-file pr-body.md \
-            --base main \
-            --head "$BRANCH" \
-            --label "codex"
-
-          echo "Pull request created successfully"
+          gh pr create --title "$PR_TITLE" --body-file pr-body.md --base main --head "$BRANCH" --label "codex"
 
       - name: Add comment to issue
         env:
