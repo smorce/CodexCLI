@@ -1,0 +1,336 @@
+﻿openapi: 3.0.3
+info:
+  title: MarketDataService API
+  version: 1.0.0
+  description: Provides returns, covariance matrices, and statistics for TopTenFrontier.
+servers:
+  - url: https://api.toptenfrontier.example.com/market-data
+    description: Production
+  - url: https://staging.toptenfrontier.example.com/market-data
+    description: Staging
+security:
+  - bearerAuth: []
+paths:
+  /v1/market-data/returns:
+    get:
+      summary: Retrieve returns for target symbols
+      operationId: getReturns
+      parameters:
+        - in: query
+          name: symbols
+          required: true
+          schema:
+            type: string
+          description: Comma-separated list of ticker symbols (max 10).
+        - in: query
+          name: frequency
+          schema:
+            type: string
+            enum: [daily, intraday]
+            default: daily
+        - in: query
+          name: start
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Returns time series.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReturnsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/market-data/covariance:
+    get:
+      summary: Get covariance matrix for specified window
+      operationId: getCovariance
+      parameters:
+        - in: query
+          name: windowDays
+          required: true
+          schema:
+            type: integer
+            enum: [22, 63, 126, 252]
+        - in: query
+          name: asOf
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Covariance matrix payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CovarianceResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/market-data/statistics:
+    get:
+      summary: Retrieve summary statistics for target symbols
+      operationId: getStatistics
+      parameters:
+        - in: query
+          name: asOf
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: frequency
+          schema:
+            type: string
+            enum: [daily, intraday]
+            default: daily
+      responses:
+        '200':
+          description: Statistical summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/market-data/ingest:
+    post:
+      summary: Start data ingest job
+      operationId: startIngest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngestRequest'
+      responses:
+        '202':
+          description: Job accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          description: Insufficient role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Job already running.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/market-data/health:
+    get:
+      summary: Health status of ingest pipeline
+      operationId: getHealth
+      responses:
+        '200':
+          description: Health payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ReturnPoint:
+      type: object
+      required: [symbol, timestamp, returnPct]
+      properties:
+        symbol:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        returnPct:
+          type: number
+          format: float
+    ReturnsResponse:
+      type: object
+      properties:
+        frequency:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReturnPoint'
+    CovarianceRow:
+      type: object
+      required: [symbol, covariances]
+      properties:
+        symbol:
+          type: string
+        covariances:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+    CovarianceResponse:
+      type: object
+      properties:
+        windowDays:
+          type: integer
+        asOf:
+          type: string
+          format: date-time
+        matrix:
+          type: array
+          items:
+            $ref: '#/components/schemas/CovarianceRow'
+    Statistic:
+      type: object
+      required: [symbol, expectedReturn, volatility]
+      properties:
+        symbol:
+          type: string
+        expectedReturn:
+          type: number
+          format: float
+        volatility:
+          type: number
+          format: float
+        beta:
+          type: number
+          format: float
+          nullable: true
+        sharpe:
+          type: number
+          format: float
+          nullable: true
+    StatisticsResponse:
+      type: object
+      properties:
+        frequency:
+          type: string
+        asOf:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statistic'
+    IngestRequest:
+      type: object
+      required: [symbols]
+      properties:
+        symbols:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            type: string
+        range:
+          type: object
+          properties:
+            start:
+              type: string
+              format: date-time
+            end:
+              type: string
+              format: date-time
+    IngestResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, COMPLETED]
+    HealthResponse:
+      type: object
+      properties:
+        queueDepth:
+          type: integer
+        lastSuccessAt:
+          type: string
+          format: date-time
+        providerLatencyMs:
+          type: number
+          format: float
+        successRate:
+          type: number
+          format: float
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: JWT is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: Rate limit exceeded.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Unexpected server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

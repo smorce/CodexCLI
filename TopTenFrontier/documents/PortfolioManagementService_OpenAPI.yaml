@@ -1,0 +1,485 @@
+﻿openapi: 3.0.3
+info:
+  title: PortfolioManagementService API
+  version: 1.0.0
+  description: Portfolio lifecycle and reporting APIs.
+servers:
+  - url: https://api.toptenfrontier.example.com/portfolio
+    description: Production
+  - url: https://staging.toptenfrontier.example.com/portfolio
+    description: Staging
+security:
+  - bearerAuth: []
+paths:
+  /v1/portfolios:
+    post:
+      summary: Create draft portfolio
+      operationId: createPortfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioCreateRequest'
+      responses:
+        '201':
+          description: Portfolio created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioSummary'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      summary: List portfolios
+      operationId: listPortfolios
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum: [DRAFT, PENDING_REVIEW, APPROVED, REJECTED]
+        - in: query
+          name: from
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: to
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: cursor
+          schema:
+            type: string
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 25
+      responses:
+        '200':
+          description: Portfolio list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/portfolios/{portfolioId}:
+    get:
+      summary: Retrieve portfolio detail
+      operationId: getPortfolio
+      parameters:
+        - in: path
+          name: portfolioId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Portfolio detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      summary: Update draft portfolio
+      operationId: updatePortfolio
+      parameters:
+        - in: path
+          name: portfolioId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioUpdateRequest'
+      responses:
+        '200':
+          description: Portfolio updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/portfolios/{portfolioId}/approve:
+    post:
+      summary: Progress approval workflow
+      operationId: approvePortfolio
+      parameters:
+        - in: path
+          name: portfolioId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovalRequest'
+      responses:
+        '200':
+          description: Approval status updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/portfolios/{portfolioId}/publish-report:
+    post:
+      summary: Generate portfolio report
+      operationId: publishReport
+      parameters:
+        - in: path
+          name: portfolioId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '202':
+          description: Report generation started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /v1/reports/{reportId}:
+    get:
+      summary: Fetch signed URL for generated report
+      operationId: getReport
+      parameters:
+        - in: path
+          name: reportId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Report download location.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportDownload'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    PortfolioCreateRequest:
+      type: object
+      required: [name, objective, baseCurrency]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        objective:
+          type: string
+          enum: [MAX_RETURN, MIN_RISK, MAX_SHARPE]
+        baseCurrency:
+          type: string
+          minLength: 3
+          maxLength: 3
+        targetReturn:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 0.5
+        createdFromJobId:
+          type: string
+          format: uuid
+          nullable: true
+    PortfolioSummary:
+      type: object
+      properties:
+        portfolioId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        status:
+          type: string
+        objective:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    PortfolioListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PortfolioSummary'
+        nextCursor:
+          type: string
+          nullable: true
+    Allocation:
+      type: object
+      required: [symbol, weight]
+      properties:
+        symbol:
+          type: string
+        weight:
+          type: number
+          format: float
+        expectedReturn:
+          type: number
+          format: float
+          nullable: true
+        volatility:
+          type: number
+          format: float
+          nullable: true
+    PortfolioDetail:
+      type: object
+      properties:
+        portfolioId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        objective:
+          type: string
+        baseCurrency:
+          type: string
+        targetReturn:
+          type: number
+          format: float
+        createdFromJobId:
+          type: string
+          format: uuid
+          nullable: true
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Allocation'
+        approvalLogs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApprovalLog'
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportSummary'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PortfolioUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        targetReturn:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 0.5
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Allocation'
+    ApprovalRequest:
+      type: object
+      required: [action]
+      properties:
+        action:
+          type: string
+          enum: [SUBMIT, APPROVE, REJECT]
+        comment:
+          type: string
+    ApprovalLog:
+      type: object
+      properties:
+        approvalId:
+          type: string
+          format: uuid
+        actorUserId:
+          type: string
+          format: uuid
+        action:
+          type: string
+        comment:
+          type: string
+        performedAt:
+          type: string
+          format: date-time
+    ReportResponse:
+      type: object
+      properties:
+        reportId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, GENERATING, READY]
+    ReportSummary:
+      type: object
+      properties:
+        reportId:
+          type: string
+          format: uuid
+        reportType:
+          type: string
+          enum: [PDF, CSV]
+        status:
+          type: string
+          enum: [QUEUED, GENERATING, READY, FAILED]
+        generatedAt:
+          type: string
+          format: date-time
+          nullable: true
+    ReportDownload:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: JWT is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Insufficient privileges.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Invalid state transition.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: Rate limit exceeded.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+            minimum: 1
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Unexpected server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
