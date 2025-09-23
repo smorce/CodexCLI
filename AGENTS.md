@@ -177,8 +177,6 @@
 
 **Issue タイトル**: `[Impl] {ServiceName}: {FeatureDescription} (TDD)`
 
----
-
 このリポジトリでは、`{ProjectName}`を構築しています。
 
 `{ProjectName}`において現在、`{ServiceName}`マイクロサービスが実装されていません。
