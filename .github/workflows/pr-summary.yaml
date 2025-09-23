@@ -66,8 +66,8 @@ PR: ${PR_TITLE}
 
 要約をcodex-summary.mdファイルに保存してください。"
 
-          # Codexで要約生成
-          echo "$SUMMARY_PROMPT" | codex --model gpt-4o-mini --ask-for-approval auto-edit
+          # Codexで要約生成（承認ダイアログを表示しない）
+          echo "$SUMMARY_PROMPT" | codex --model gpt-4o-mini --ask-for-approval never
 
           # 要約ファイルが生成されたかチェック
           if [ ! -f "codex-summary.md" ]; then
