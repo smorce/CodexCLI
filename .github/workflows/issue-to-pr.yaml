@@ -63,8 +63,8 @@ jobs:
             "最後に 'npm run build && npm test' を実行してエラーが出ないことを確認してください。.gitのような'.'から始まるファイル、フォルダの中身は絶対に変更しないでください。")"
           
           echo "Executing Codex with prompt..."
-          # Codex CLIを実行（承認ダイアログを表示しない）
-          codex --ask-for-approval never "$PROMPT"
+          # Codex CLIを実行（承認ダイアログを表示しない・TTY非依存でSTDINから入力）
+          printf "%s" "$PROMPT" | codex --ask-for-approval never
 
           # 変更があるかチェック
           if [[ -n $(git status --porcelain) ]]; then
