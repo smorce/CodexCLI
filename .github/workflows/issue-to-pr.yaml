@@ -7,6 +7,7 @@ on:
 permissions:
   contents: write          # push/branch作成に必要
   pull-requests: write     # PRの作成に必要
+  issues: write   # ← 追加
 
 jobs:
   fix_with_codex:
@@ -16,8 +17,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
-      issues: read
+      issues: write    # ← read ではなく write に
+      # actions: write は不要なら外してOK
 
     steps:
       - uses: actions/checkout@v4
