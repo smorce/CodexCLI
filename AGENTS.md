@@ -43,9 +43,10 @@
     - *（例: カタログサービス）*
     - [ ] `temp/catalog-crud-api.sow.md` の作成と承認
 
-[ ] **Step 4: 実装指示書 (GitHub Issue) の作成**
-    - *（例: カタログサービス）*
-    - [ ] GitHub Issue の作成と登録
+[ ] **Step 4: 実装指示書 (GitHub Issue 本文) の生成**
+    - [ ] SOWと実装計画書に基づき、各マイクロサービスの実装指示書（GitHub Issueの本文）をMarkdownファイルとして生成します。生成する際は以下のテンプレートを利用して作成します。
+    - [ ] ファイルは `temp/{service_name}-{feature_description}.issue.md` の形式で出力します。
+    - *（対象となるサービスごとにタスクが追加されます）*
 
 [ ] **Step 5: TDDによる実装 (ユーザーまたは開発者担当)**
     - [ ] Issueを解釈し、TDDに基づいた開発を開始
@@ -78,9 +79,9 @@
     3.  **実装計画**: TDDのステップを意識した具体的なタスクリストを作成します。
     4.  **ユーザー向けタスクリスト**: ユーザー側で対応が必要な作業（APIキーの準備、環境構築、ドメイン設定など）があれば、**実行可能なレベルの具体的な手順と共に**リストアップします。
 
-#### 2. 実装指示書 (GitHub Issue) の作成 (Step 4)
+#### 2. 実装指示書 (GitHub Issue 本文) の作成 (Step 4)
 
--   SOWと設計書に基づき、テンプレートを用いてGitHub Issueを作成します。これは、実際の開発者がTDDサイクルとTidy First原則を厳格に遵守して実装するための最終的な指示書となります。
+-   SOWと実装計画書に基づき、以下のテンプレートを用いてGitHub Issueの本文を作成します。これは、実際の開発者がTDDサイクルとTidy First原則を厳格に遵守して実装するための最終的な指示書となります。
 
 ---
 
@@ -172,36 +173,53 @@
 *   `components.schemas` にリソースのJSON Schemaを定義
 *   標準エラー形式（例: code, message）を共通化
 
-### 4.4. GitHub Issue テンプレート
+### 4.4. GitHub Issue 本文テンプレート
 
-**Issue タイトル**: `[Impl] Catalog Service: 動画メタデータCRUD API (TDD)`
+**Issue タイトル**: `[Impl] {ServiceName}: {FeatureDescription} (TDD)`
 
-**課題:** カタログサービスを仕様に基づき、TDD/Tidy First原則を厳守して実装する。
+---
 
-**参照:**
+このリポジトリでは、`{ProjectName}`を構築しています。
 
-*   全体仕様: {Architecture.mdのパス}
-*   詳細設計: {Design.mdのパス}
-*   API契約: {OpenAPI.yamlのパス}
-*   SOW: {sow.mdのパス}
+`{ProjectName}`において現在、`{ServiceName}`マイクロサービスが実装されていません。
 
-**作業内容:**
+このマイクロサービスは、安全にかつ確実に実装するために、**`documents/{ServiceName}_ImplPlan.md`に記載された実装計画**に沿って、詳細設計書とOpenAPI仕様書に厳密に従って実装する必要があります。
 
-*   **TDD/Tidy Firstの厳守**:
+### 詳細
+
+**`{ServiceName}`** は、`{ProjectName}`を構成するマイクロサービスの一つです。
+
+このサービスは、`documents/{ProjectName}_Architecture.md` に記載されている他のマイクロサービスと連携して動作します。
+
+このサービスの詳細設計は `documents/{ServiceName}_Design.md` に記載されています。このマイクロサービスを段階的かつ安全に実装するため、`documents/{ServiceName}_ImplPlan.md` に記載された手順に厳密に従ってください。
+
+上記の仕様書群を十分に理解した上で、手順通りに実装を進めてください。
+
+### 参照ドキュメント
+
+-   **全体アーキテクチャ仕様書**: `documents/{ProjectName}_Architecture.md`
+-   **詳細設計書**: `documents/{ServiceName}_Design.md`
+-   **OpenAPI仕様書**: `documents/{ServiceName}_OpenAPI.yaml`
+-   **実装計画書**: `documents/{ServiceName}_ImplPlan.md`
+-   **SOW**: `temp/{task_name}.sow.md`
+
+### 作業内容
+
+-   **TDD/Tidy Firstの厳守**:
     1.  **Red**: 常に、これから実装する機能に対する**失敗するテスト**を最初に書くこと。
     2.  **Green**: テストをパスさせるための**最小限のコード**を実装すること。
     3.  **Refactor**: テストがパスした後、コードの重複排除や可読性向上などのリファクタリングを行うこと。
     4.  **構造的変更**（リファクタリング）と**振る舞いの変更**（機能追加）は、**必ず別々のコミットに分離**すること。
-*   **API/モデル**: 設計書とOpenAPIに**厳密に一致**させること。
-*   **セキュリティ**: Supabase AuthによるJWTを検証し、RLSポリシーと連携した認可制御を実装すること。
-*   **永続化**: Neon (PostgreSQL) をターゲットとし、Prismaやnode-postgres等を用いてアクセスする。
-*   **テスト**: 単体/統合テストをTDDプロセスで作成し、API契約テストでOpenAPI準拠を検証すること。
+-   **API/モデル**: 設計書とOpenAPIに**厳密に一致**させること。
+-   **セキュリティ**: Supabase AuthによるJWTを検証し、RLSポリシーと連携した認可制御を実装すること。
+-   **永続化**: Neon (PostgreSQL) をターゲットとし、Prismaやnode-postgres等を用いてアクセスする。
+-   **テスト**: 単体/統合テストをTDDプロセスで作成し、API契約テストでOpenAPI準拠を検証すること。
 
-**完了条件:**
+### 完了条件
 
-*   設計/OpenAPIを満たすサービスが実装され、PRとして提出されること。
-*   すべてのテストがパスしていること。
-*   コミットが論理単位で、かつ「構造的変更」と「振る舞いの変更」に明確に分離されていること。
+-   設計/OpenAPIを満たすサービスが実装され、PRとして提出されること。
+-   すべてのテストがパスしていること。
+-   コミットが論理単位で、かつ「構造的変更」と「振る舞いの変更」に明確に分離されていること。
 
 ---
 
