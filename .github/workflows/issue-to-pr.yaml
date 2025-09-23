@@ -71,11 +71,9 @@ jobs:
             echo "Changes detected, committing..."
             git add .
             # コミットメッセージをIssue情報から生成
-            git commit -m "feat: #${{ github.event.issue.number }} - $ISSUE_TITLE
-
-Automated implementation by Codex CLI based on issue requirements.
-
-Closes #${{ github.event.issue.number }}"
+            git commit -m "feat: #${{ github.event.issue.number }} - $ISSUE_TITLE" \
+                       -m "Automated implementation by Codex CLI based on issue requirements." \
+                       -m "Closes #${{ github.event.issue.number }}"
           else
             echo "No changes to commit"
           fi
@@ -93,7 +91,10 @@ Closes #${{ github.event.issue.number }}"
           
           # PRタイトルと本文を構築
           PR_TITLE="feat: #${ISSUE_NUMBER} - ${ISSUE_TITLE}"
-          PR_BODY="## 概要
+          
+          # PR本文をファイルに書き出し
+          cat > pr-body.md << 'EOF'
+## 概要
 このPRは Issue #${ISSUE_NUMBER} の自動実装です。
 
 ## 変更内容
@@ -111,12 +112,17 @@ Closes #${ISSUE_NUMBER}
 - [x] ビルドエラーなし
 
 ---
-*このPRはGitHub ActionsとCodex CLIによって自動生成されました。*"
+*このPRはGitHub ActionsとCodex CLIによって自動生成されました。*
+EOF
+          
+          # 変数を置換
+          sed "s/\${ISSUE_NUMBER}/${ISSUE_NUMBER}/g" pr-body.md > pr-body-final.md
+          mv pr-body-final.md pr-body.md
 
           # PRを作成
           gh pr create \
             --title "$PR_TITLE" \
-            --body "$PR_BODY" \
+            --body-file pr-body.md \
             --base main \
             --head "$BRANCH" \
             --label "automated,codex"
@@ -130,14 +136,21 @@ Closes #${ISSUE_NUMBER}
           ISSUE_NUMBER="${{ github.event.issue.number }}"
           BRANCH="codex/issue-${ISSUE_NUMBER}"
           
-          COMMENT="🤖 **自動実装が完了しました！**
+          # コメントをファイルに書き出し
+          cat > issue-comment.md << 'EOF'
+🤖 **自動実装が完了しました！**
 
 Codex CLIによる自動実装が完了し、プルリクエストが作成されました。
 
-- **ブランチ**: \`${BRANCH}\`
+- **ブランチ**: `${BRANCH}`
 - **実装方針**: TDD + Tidy First原則
 - **次のステップ**: PRレビューをお願いします
 
-レビュー後、問題なければマージしてください。"
-
-          gh issue comment ${ISSUE_NUMBER} --body "$COMMENT"
+レビュー後、問題なければマージしてください。
+EOF
+          
+          # 変数を置換
+          sed "s/\${BRANCH}/${BRANCH}/g" issue-comment.md > issue-comment-final.md
+          mv issue-comment-final.md issue-comment.md
+          
+          gh issue comment ${ISSUE_NUMBER} --body-file issue-comment.md
