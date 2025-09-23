@@ -172,7 +172,7 @@
 *   `components.schemas` にリソースのJSON Schemaを定義
 *   標準エラー形式（例: code, message）を共通化
 
-### 4.4. GitHub Issue (AI Agentへの実装指示) テンプレート
+### 4.4. GitHub Issue テンプレート
 
 **Issue タイトル**: `[Impl] Catalog Service: 動画メタデータCRUD API (TDD)`
 
@@ -180,10 +180,10 @@
 
 **参照:**
 
-*   全体仕様: `documents/ProjectName_Architecture.md`
-*   詳細設計: `documents/CatalogService_Design.md`
-*   API契約: `documents/CatalogService_OpenAPI.yaml`
-*   SOW: `temp/catalog-crud-api.sow.md`
+*   全体仕様: {Architecture.mdのパス}
+*   詳細設計: {Design.mdのパス}
+*   API契約: {OpenAPI.yamlのパス}
+*   SOW: {sow.mdのパス}
 
 **作業内容:**
 

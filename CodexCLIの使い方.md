@@ -6,7 +6,7 @@ npm install -g @openai/codex@latest
 codex -m gpt-5-codex --yolo -c model_reasoning_effort="high" --search "$@"
 
 # 指示の出し方
-prompts/Instructions.md を読んで、そこに書いてある制約条件を守りながら指示を実行してください。 英語が分からないので、今後の出力は日本語でお願いします。
+prompts/Instructions.md を読んで、そこに書いてある制約条件を守りながら指示を実行してください。英語で思考して、ドキュメントも英語で作成し、回答は日本語でお願いします。
 --------------------------------
 gh auth switch --user smorce
 してから、今の変更をコミットしてリポジトリ(https://github.com/smorce/CodexCLI)にPUSHしてください。ブランチも適切に対応して必要に応じてマージしてください。

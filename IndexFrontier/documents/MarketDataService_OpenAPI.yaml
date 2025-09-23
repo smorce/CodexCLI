@@ -1,0 +1,403 @@
+﻿openapi: 3.0.3
+info:
+  title: Market Data Service API
+  version: 1.0.0
+  description: S&P 500 constituent and pricing data APIs.
+servers:
+  - url: https://api.indexfrontier.com/market
+security:
+  - bearerAuth: []
+paths:
+  /constituents:
+    get:
+      operationId: listConstituents
+      summary: List S&P 500 constituents
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - in: query
+          name: asOf
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: includeMeta
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: Constituents page
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConstituentListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /constituents/top-ten:
+    get:
+      operationId: getTopTen
+      summary: Get current top ten constituents by free-float market cap
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '200':
+          description: Top ten constituents
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopTenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /constituents/refresh:
+    post:
+      operationId: refreshConstituents
+      summary: Trigger constituent refresh from provider
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+      responses:
+        '202':
+          description: Refresh accepted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /prices/snapshot:
+    get:
+      operationId: getPriceSnapshot
+      summary: Get latest price snapshot
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - in: query
+          name: symbol
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: asOf
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Price snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceSnapshotResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /prices/history:
+    get:
+      operationId: getPriceHistory
+      summary: Get price history series
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - in: query
+          name: symbol
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: start
+          schema:
+            type: string
+            format: date-time
+          required: true
+        - in: query
+          name: end
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: interval
+          schema:
+            type: string
+            enum: [1m,5m,1d]
+            default: 1d
+      responses:
+        '200':
+          description: Price history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceHistoryResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+  /prices/ingest:
+    post:
+      operationId: ingestPrice
+      summary: Ingest price payload from provider webhook
+      security:
+        - providerSignature: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceIngestPayload'
+      responses:
+        '202':
+          description: Ingest accepted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    providerSignature:
+      type: apiKey
+      in: header
+      name: X-Signature
+  parameters:
+    TenantHeader:
+      in: header
+      name: X-Tenant-Id
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Tenant context identifier.
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationErrorResponse'
+  schemas:
+    Constituent:
+      type: object
+      required: [symbol, companyName, sector, freeFloatMarketCap, weight, asOf]
+      properties:
+        symbol:
+          type: string
+        companyName:
+          type: string
+        sector:
+          type: string
+        freeFloatMarketCap:
+          type: number
+          format: float
+        weight:
+          type: number
+          format: float
+        asOf:
+          type: string
+          format: date
+        source:
+          type: string
+    ConstituentListResponse:
+      type: object
+      required: [data, meta]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Constituent'
+        meta:
+          $ref: '#/components/schemas/PagedResponseMeta'
+    TopTenResponse:
+      type: object
+      required: [asOf, constituents]
+      properties:
+        asOf:
+          type: string
+          format: date-time
+        constituents:
+          type: array
+          items:
+            type: object
+            required: [symbol, weight, freeFloatMarketCap]
+            properties:
+              symbol:
+                type: string
+              weight:
+                type: number
+                format: float
+              freeFloatMarketCap:
+                type: number
+                format: float
+    PriceSnapshotResponse:
+      type: object
+      required: [symbol, asOf, last, volume]
+      properties:
+        symbol:
+          type: string
+        asOf:
+          type: string
+          format: date-time
+        bid:
+          type: number
+          format: float
+        ask:
+          type: number
+          format: float
+        last:
+          type: number
+          format: float
+        volume:
+          type: integer
+        marketCap:
+          type: number
+          format: float
+    PriceHistoryResponse:
+      type: object
+      required: [symbol, interval, points]
+      properties:
+        symbol:
+          type: string
+        interval:
+          type: string
+        points:
+          type: array
+          items:
+            type: object
+            required: [asOf, open, high, low, close, volume]
+            properties:
+              asOf:
+                type: string
+                format: date-time
+              open:
+                type: number
+                format: float
+              high:
+                type: number
+                format: float
+              low:
+                type: number
+                format: float
+              close:
+                type: number
+                format: float
+              volume:
+                type: integer
+    PriceIngestPayload:
+      type: object
+      required: [symbol, asOf, open, high, low, close, volume, provider]
+      properties:
+        symbol:
+          type: string
+        asOf:
+          type: string
+          format: date-time
+        open:
+          type: number
+          format: float
+        high:
+          type: number
+          format: float
+        low:
+          type: number
+          format: float
+        close:
+          type: number
+          format: float
+        volume:
+          type: integer
+        marketCap:
+          type: number
+          format: float
+        provider:
+          type: string
+        signatureTimestamp:
+          type: string
+          format: date-time
+    PagedResponseMeta:
+      type: object
+      required: [limit, offset, total]
+      properties:
+        limit:
+          type: integer
+        offset:
+          type: integer
+        total:
+          type: integer
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        correlationId:
+          type: string
+          format: uuid
+    ValidationErrorResponse:
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+        - type: object
+          properties:
+            details:
+              type: array
+              items:
+                type: object
+                required: [field, message]
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
