@@ -125,17 +125,19 @@ jobs:
           if [ -n "${CODEX_AUTH_JSON:-}" ]; then
             printf '%s' "$CODEX_AUTH_JSON" > ~/.codex/auth.json
             chmod 600 ~/.codex/auth.json
-            cat > ~/.codex/config.toml <<TOML
-            preferred_auth_method = "chatgpt"
-            model = "${OPENAI_MODEL}"
-            model_reasoning_effort = "high"
-            TOML
+            : > ~/.codex/config.toml
+            printf '%s\n' \
+              'preferred_auth_method = "chatgpt"' \
+              "model = \"${OPENAI_MODEL}\"" \
+              'model_reasoning_effort = "high"' \
+              > ~/.codex/config.toml
           else
-            cat > ~/.codex/config.toml <<TOML
-            preferred_auth_method = "apikey"
-            model = "${OPENAI_MODEL}"
-            model_reasoning_effort = "high"
-            TOML
+            : > ~/.codex/config.toml
+            printf '%s\n' \
+              'preferred_auth_method = "apikey"' \
+              "model = \"${OPENAI_MODEL}\"" \
+              'model_reasoning_effort = "high"' \
+              > ~/.codex/config.toml
           fi
 
       - name: Generate patch with Codex
@@ -169,8 +171,7 @@ jobs:
             "最後に 'npm run build && npm test' を実行し、エラーが出ないことを確認してください。.git 等のドットファイル/フォルダは変更しないでください。")"
 
           codex --version || true
-          codex exec --full-auto --model "${OPENAI_MODEL}" --config preferred_auth_method=apikey "$PROMPT" < /dev/null
-
+          codex exec --full-auto --model "${OPENAI_MODEL}" "$PROMPT" < /dev/null
           if [[ -n $(git status --porcelain) ]]; then
             git add -A
             git commit -m "feat: #${{ steps.preflight.outputs.issue_number }} - $ISSUE_TITLE" \
