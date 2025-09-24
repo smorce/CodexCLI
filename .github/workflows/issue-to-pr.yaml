@@ -106,24 +106,34 @@ jobs:
             exit 0
           fi
 
-          # List(models) は 200 でも、モデル権限が別で落ちる場合がある
+          # モデルとエンドポイントの互換性を考慮して /responses → /chat.completions の順に試行
+          echo "Probing responses with model=${OPENAI_MODEL}..."
+          RESP_CODE_RESPONSES=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/responses \
+            -H "Authorization: Bearer $OPENAI_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"model\":\"${OPENAI_MODEL}\",\"input\":\"ping\",\"max_output_tokens\":1}" || true)
+          echo "Responses probe HTTP code: $RESP_CODE_RESPONSES"
+
           echo "Probing chat.completions with model=${OPENAI_MODEL}..."
-          RESP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/chat/completions \
+          RESP_CODE_CHAT=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/chat/completions \
             -H "Authorization: Bearer $OPENAI_API_KEY" \
             -H "Content-Type: application/json" \
             -d "{\"model\":\"${OPENAI_MODEL}\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}],\"max_tokens\":1}" || true)
-          echo "Probe HTTP code: $RESP_CODE"
+          echo "Chat probe HTTP code: $RESP_CODE_CHAT"
 
-          if [ "$RESP_CODE" != "200" ]; then
+          if [ "$RESP_CODE_RESPONSES" != "200" ] && [ "$RESP_CODE_CHAT" != "200" ]; then
             : > preflight.md
             printf '%s\n' \
-              '⚠️ OpenAI API 認証/権限エラー（chat.completions で失敗）' \
+              '⚠️ OpenAI API モデル/エンドポイントの互換性エラー' \
               '' \
-              "HTTP status: $RESP_CODE" \
+              "Responses HTTP: $RESP_CODE_RESPONSES" \
+              "Chat HTTP: $RESP_CODE_CHAT" \
               '' \
-              '- APIキーが無効/期限切れ/権限不足の可能性' \
-              "- 組織側のモデル使用権限（${OPENAI_MODEL}）未付与の可能性" \
-              '対処: OPENAI_API_KEY とモデル権限を確認して再実行してください。' \
+              '- 指定モデルが存在しない、または権限が無い可能性' \
+              '- 指定モデルが chat.completions 非対応の可能性（Responses API を利用してください）' \
+              "- 現在のモデル: ${OPENAI_MODEL}" \
+              '対処: モデル名の妥当性、権限、エンドポイント互換性を確認してください。' \
+              '> 参考: モデル/エンドポイント互換性ドキュメント、APIエラーコード説明' \
               > preflight.md
             gh issue comment "${ISSUE_NUMBER}" --body-file preflight.md || true
             echo "should_skip=true" >> "$GITHUB_OUTPUT"
