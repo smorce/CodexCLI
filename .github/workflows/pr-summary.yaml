@@ -52,7 +52,7 @@ jobs:
           cat > summary-prompt.txt <<'EOF'
 以下のPull Requestの差分を分析し、日本語で要約してください。
 
-プロジェクト: TopTenFrontier（マイクロサービスアーキテクチャによる投資最適化システム）
+プロジェクト概要: マイクロサービスアーキテクチャ
 PR: ${PR_TITLE}
 
 要約に含めるべき項目:
