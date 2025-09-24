@@ -7,7 +7,7 @@ on:
 permissions:
   contents: write          # push/branch作成に必要
   pull-requests: write     # PRの作成に必要
-  issues: write   # ← 追加
+  issues: write            # ← 追加
 
 jobs:
   fix_with_codex:
@@ -149,9 +149,6 @@ jobs:
           PROMPT="$(printf '%s\n\n%s\n\n%s\n%s\n%s\n%s' \
             "$ISSUE_TITLE" \
             "$ISSUE_BODY" \
-            "このプロジェクトはマイクロサービスアーキテクチャです。" \
-            "TDD（Red-Green-Refactor）とTidy First原則を厳格に遵守してください。" \
-            "構造的変更（リファクタリング）と振る舞いの変更（機能追加）は別コミットに分離してください。" \
             "最後に 'npm run build && npm test' を実行し、エラーが出ないことを確認してください。.git 等のドットファイル/フォルダは変更しないでください。")"
 
           codex --version || true
