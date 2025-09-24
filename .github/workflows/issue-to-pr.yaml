@@ -21,6 +21,10 @@ jobs:
       issues: write    # ← read ではなく write に
       # actions: write は不要なら外してOK
 
+    env:
+      # 利用するOpenAIモデル。リポジトリ/環境変数 vars.OPENAI_MODEL が未設定なら gpt-4o-mini を使用
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL != '' && vars.OPENAI_MODEL || 'gpt-4o-mini' }}
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -99,11 +103,11 @@ jobs:
           fi
 
           # List(models) は 200 でも、モデル権限が別で落ちる場合がある
-          echo 'Probing chat.completions with model=gpt-5-codex...'
+          echo "Probing chat.completions with model=${OPENAI_MODEL}..."
           RESP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/chat/completions \
             -H "Authorization: Bearer $OPENAI_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"model":"gpt-5-codex","messages":[{"role":"user","content":"ping"}],"max_tokens":1}' || true)
+            -d "{\"model\":\"${OPENAI_MODEL}\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}],\"max_tokens\":1}" || true)
           echo "Probe HTTP code: $RESP_CODE"
 
           if [ "$RESP_CODE" != "200" ]; then
@@ -114,7 +118,7 @@ jobs:
               "HTTP status: $RESP_CODE" \
               '' \
               '- APIキーが無効/期限切れ/権限不足の可能性' \
-              '- 組織側のモデル使用権限（gpt-5-codex）未付与の可能性' \
+              "- 組織側のモデル使用権限（${OPENAI_MODEL}）未付与の可能性" \
               '対処: OPENAI_API_KEY とモデル権限を確認して再実行してください。' \
               > preflight.md
             gh issue comment "${ISSUE_NUMBER}" --body-file preflight.md || true
@@ -124,16 +128,16 @@ jobs:
 
           echo "should_skip=false" >> "$GITHUB_OUTPUT"
 
-      # ここを追加／上書き（認証方式=APIキー、モデル=gpt-5-codex）
+      # ここを追加／上書き（認証方式=APIキー、モデルは環境変数 OPENAI_MODEL）
       - name: Configure Codex (API key mode)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           set -euo pipefail
           mkdir -p ~/.codex
-          cat > ~/.codex/config.toml <<'TOML'
+          cat > ~/.codex/config.toml <<TOML
           preferred_auth_method = "apikey"
-          model = "gpt-5-codex"
+          model = "${OPENAI_MODEL}"
           model_reasoning_effort = "high"
           TOML
 
@@ -168,7 +172,7 @@ jobs:
             "最後に 'npm run build && npm test' を実行し、エラーが出ないことを確認してください。.git 等のドットファイル/フォルダは変更しないでください。")"
 
           codex --version || true
-          codex exec --full-auto --model gpt-5-codex --config preferred_auth_method=apikey "$PROMPT" < /dev/null
+          codex exec --full-auto --model "${OPENAI_MODEL}" --config preferred_auth_method=apikey "$PROMPT" < /dev/null
 
           if [[ -n $(git status --porcelain) ]]; then
             git add -A
