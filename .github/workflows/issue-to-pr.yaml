@@ -96,62 +96,6 @@ jobs:
           fi
           echo "Target ISSUE_NUMBER=$ISSUE_NUMBER"
 
-          # Decide auth method: prefer chatgpt if CODEX_AUTH_JSON is present
-          if [ -n "${CODEX_AUTH_JSON:-}" ]; then
-            echo "auth_method=chatgpt" >> "$GITHUB_OUTPUT"
-            echo "Using ChatGPT authentication; skipping OpenAI API key probe."
-          else
-            echo "auth_method=apikey" >> "$GITHUB_OUTPUT"
-            if [ -z "${OPENAI_API_KEY:-}" ]; then
-              : > preflight.md
-              printf '%s\n' \
-                '⚠️ OpenAI API key is not configured (secrets.OPENAI_API_KEY).' \
-                '' \
-                'このリポジトリの Secrets に OPENAI_API_KEY を設定してください。' \
-                'または CODEX_AUTH_JSON を設定して ChatGPT 認証を使用してください。' \
-                > preflight.md
-              gh issue comment "${ISSUE_NUMBER}" --body-file preflight.md || true
-              echo "should_skip=true" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-          fi
-
-          # モデルとエンドポイントの互換性を考慮して /responses → /chat.completions の順に試行
-          # Only probe OpenAI API when using API key auth
-          if [ "${{ steps.preflight.outputs.auth_method }}" != "chatgpt" ]; then
-            echo "Probing responses with model=${OPENAI_MODEL}..."
-            RESP_CODE_RESPONSES=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/responses \
-              -H "Authorization: Bearer $OPENAI_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d "{\"model\":\"${OPENAI_MODEL}\",\"input\":\"ping\",\"max_output_tokens\":1}" || true)
-            echo "Responses probe HTTP code: $RESP_CODE_RESPONSES"
-
-            echo "Probing chat.completions with model=${OPENAI_MODEL}..."
-            RESP_CODE_CHAT=$(curl -s -o /dev/null -w "%{http_code}" https://api.openai.com/v1/chat/completions \
-              -H "Authorization: Bearer $OPENAI_API_KEY" \
-              -H "Content-Type: application/json" \
-              -d "{\"model\":\"${OPENAI_MODEL}\",\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}],\"max_tokens\":1}" || true)
-            echo "Chat probe HTTP code: $RESP_CODE_CHAT"
-
-            if [ "$RESP_CODE_RESPONSES" != "200" ] && [ "$RESP_CODE_CHAT" != "200" ]; then
-              : > preflight.md
-              printf '%s\n' \
-                '⚠️ OpenAI API モデル/エンドポイントの互換性エラー' \
-                '' \
-                "Responses HTTP: $RESP_CODE_RESPONSES" \
-                "Chat HTTP: $RESP_CODE_CHAT" \
-                '' \
-                '- 指定モデルが存在しない、または権限が無い可能性' \
-                '- 指定モデルが chat.completions 非対応の可能性（Responses API を利用してください）' \
-                "- 現在のモデル: ${OPENAI_MODEL}" \
-                '対処: モデル名の妥当性、権限、エンドポイント互換性を確認してください。' \
-                '> 参考: モデル/エンドポイント互換性ドキュメント、APIエラーコード説明' \
-                > preflight.md
-              gh issue comment "${ISSUE_NUMBER}" --body-file preflight.md || true
-              echo "should_skip=true" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-          fi
 
           # Fetch Issue title/body for downstream steps
           ISSUE_TITLE=$(gh issue view "$ISSUE_NUMBER" --json title --jq '.title' || true)
