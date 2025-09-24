@@ -78,7 +78,7 @@ jobs:
           npm config set fetch-retry-mintimeout 10000
           npm config set fetch-retry-maxtimeout 120000
           retry() { n=0; until [ $n -ge 5 ]; do npm install -g @openai/codex && break; n=$((n+1)); echo "codex install retry $n"; sleep $((n*5)); done; }
-          retry true
+          retry npm install -g @openai/codex
 
       - name: "Preflight: Check OpenAI API key, determine issue, and reachability"
         id: preflight
@@ -116,6 +116,7 @@ jobs:
 
       # 認証方式を自動選択（CODEX_AUTH_JSON があれば chatgpt、無ければ apikey）
       - name: Configure Codex auth and model
+        id: auth
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
@@ -131,6 +132,8 @@ jobs:
               "model = \"${OPENAI_MODEL}\"" \
               'model_reasoning_effort = "high"' \
               > ~/.codex/config.toml
+            echo "auth_method=chatgpt" >> "$GITHUB_OUTPUT"
+            echo "Configured Codex auth method: chatgpt"
           else
             : > ~/.codex/config.toml
             printf '%s\n' \
@@ -138,6 +141,25 @@ jobs:
               "model = \"${OPENAI_MODEL}\"" \
               'model_reasoning_effort = "high"' \
               > ~/.codex/config.toml
+            echo "auth_method=apikey" >> "$GITHUB_OUTPUT"
+            echo "Configured Codex auth method: apikey"
+          fi
+
+      - name: Show Codex CLI auth status
+        if: ${{ always() }}
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: |
+          set -euo pipefail
+          echo "Auth method (from config): ${{ steps.auth.outputs.auth_method }}"
+          if command -v codex >/dev/null 2>&1; then
+            codex --version || true
+            echo "---- codex /status ----"
+            codex /status || true
+            echo "-----------------------"
+          else
+            echo "codex not found in PATH"
           fi
 
       - name: Generate patch with Codex
