@@ -1,9 +1,23 @@
-LLM に tempディレクトリの Issue本文を使いつつ Issue（codex ラベル付き）を作成してもらい、次に
-
+LLM に temp ディレクトリの Issue 本文を使いつつ Issue（codex ラベル付き）を作成してもらい、次に
+```
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/trigger-issue-to-pr.ps1 -IssueNumber 5
-
+```
 を実行してもらう。
-上記を実行するとワークフローが発火する。（一回ラベルを削除して貼り直さないと何故か発火しない）。
+上記を実行するとワークフローが発火する。（一回ラベルを削除して貼り直さないと何故か発火しないため）。Webページから手動で実行することも可能(その場合は Issue 番号を手入力する)。
+
+サブスク範囲内でCodexCLIを呼び出すことにも成功。
+ただ、指示が悪いのかタスクリストをチェックするだけで実装してくれないので、Issue用の指示を修正しないといけない。 ← 今ココ
+
+これで gpt-5-codex(hight) を使ったウォーターフォール型バイブコーディングはほぼできた。
+- 全体アーキテクチャの設計
+- 各マイクロサービスの詳細設計
+- SOWの作成
+- Issue本文の作成
+までをCodexCLIが担当。
+- trigger-issue-to-pr.ps1 で GitHub Actions のワークフローが稼働し
+- サブスクの範囲内で gpt-5-codex(hight) が該当Issueの実装→プルリク作成する
+フローになった。
+
 
 
 GitHub Actions 上で Codex を ChatGPT 認証で動かすフローを追加しました。secrets.CODEX_AUTH_JSON が存在する場合は preferred_auth_method = "chatgpt" を設定し、~/.codex/auth.json を復元して ChatGPT サブスク側の利用枠で実行します。なければ従来どおり API key モードで動作します。
