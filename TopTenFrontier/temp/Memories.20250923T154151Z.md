@@ -13,3 +13,8 @@
 * 作業要約: IndexConstituentService向けGitHub Issue本文をテンプレート準拠で更新し、Tidy First/TDD手順と検証項目を明確化した。
 * Next Step: 開発担当者がIssueに従ってTDD実装を進め、完了後にnpm run build && npm testで検証する。
 ---
+---
+[MILESTONE] - 2025-09-24T03:49:07Z
+* 作業要約: IndexConstituentService関連ドキュメントを documents/ 配下へ複製し、開発者向けIssue本文を temp/index-constituent-sync.issue.md に整備してユーザー指示テンプレートと一致させた。
+* Next Step: 開発担当者がIssueを参照してTidy First/TDDで実装し、完了後にnpm run build && npm testを実行して検証する。
+---
