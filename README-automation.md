@@ -6,6 +6,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/trigger-issue-to-pr.
 上記を実行するとワークフローが発火する。（一回ラベルを削除して貼り直さないと何故か発火しない）。
 
 
+GitHub Actions 上で Codex を ChatGPT 認証で動かすフローを追加しました。secrets.CODEX_AUTH_JSON が存在する場合は preferred_auth_method = "chatgpt" を設定し、~/.codex/auth.json を復元して ChatGPT サブスク側の利用枠で実行します。なければ従来どおり API key モードで動作します。
+- 使い方:
+  - ローカルで codex --login → ~/.codex/auth.json を取得
+  - リポジトリ Secrets に CODEX_AUTH_JSON として内容を保存
+  - 既定モデルは OPENAI_MODEL で制御（リポジトリ Variables で上書き可能）
+
+- gpt-5-codex は Chat Completions 非対応/権限外の可能性が高く 404 が出やすいです。サブスク認証でもモデル自体が非対応なら失敗します。OPENAI_MODEL は gpt-4o または gpt-4o-mini を推奨します。
+- ChatGPT 認証での実行はサブスクの利用枠が消費されます。枠を超えるとリセットまで使えなくなる点に留意してください。
+
+
 
 
 ## GitHub Actions 発火スクリプト（Issue ラベル付け）
