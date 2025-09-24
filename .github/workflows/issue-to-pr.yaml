@@ -67,6 +67,8 @@ jobs:
           retry npm ci --no-audit --no-fund
 
       - name: Install Codex CLI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           # OpenAI Codex CLIをインストール（最新版を使用） with retries
