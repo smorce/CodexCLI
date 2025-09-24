@@ -48,8 +48,8 @@ jobs:
             mv pr-diff-truncated.txt pr-diff.txt
           fi
 
-          # プロンプトをファイルに生成（YAML/シェルのエスケープ問題回避）
-          cat > summary-prompt.txt <<EOF
+          # プロンプトをファイルに生成（安全のためヒアドキュメントをクオート）
+          cat > summary-prompt.txt <<'EOF'
 以下のPull Requestの差分を分析し、日本語で要約してください。
 
 プロジェクト: TopTenFrontier（マイクロサービスアーキテクチャによる投資最適化システム）
@@ -66,7 +66,7 @@ PR: ${PR_TITLE}
 差分ファイル: pr-diff.txt
 
 要約をcodex-summary.mdファイルに保存してください。
-EOF
+          EOF
 
           # Codexで要約生成（承認ダイアログを表示しない）
           codex --ask-for-approval never < summary-prompt.txt
