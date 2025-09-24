@@ -157,7 +157,7 @@ jobs:
             codex --version || true
             echo "---- Testing CODEX_AUTH_JSON authentication ----"
             echo "OPENAI_API_KEY is intentionally not set for this test"
-            codex exec -c model_max_output_tokens=1 "Test" || echo "サブスクの範囲内で認証できていません。API KEYを使っている可能性が高いです。"
+            codex exec -c model_max_output_tokens=10 "これは認証テストです。待機してください。" || echo "サブスクの範囲内で認証できていません。API KEYを使っている可能性が高いです。"
             echo "-----------------------------------------------"
           else
             echo "codex not found in PATH"
