@@ -1,6 +1,7 @@
 name: Issue to PR with Codex
 
 on:
+  workflow_dispatch: {}
   issues:
     types: [labeled]
 
@@ -12,7 +13,7 @@ permissions:
 jobs:
   fix_with_codex:
     runs-on: ubuntu-latest
-    if: github.event.label.name == 'codex' # 'codex'ラベルがついた時のみ実行
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.label && github.event.label.name == 'codex') }} # 手動 or 'codex'ラベル時のみ実行
 
     permissions:
       contents: write
@@ -25,6 +26,14 @@ jobs:
         with:
           # フルヒストリーを取得してブランチ作成を確実にする
           fetch-depth: 0
+
+      - name: Debug event context
+        run: |
+          set -euo pipefail
+          echo "EVENT_NAME=${GITHUB_EVENT_NAME}"
+          echo "EVENT_PATH=${GITHUB_EVENT_PATH}"
+          echo "Label in payload (first occurrence):"
+          grep -m1 '"label"\|"name"' "$GITHUB_EVENT_PATH" || true
 
       - name: Set git user
         run: |
@@ -67,6 +76,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+          # Manual dispatch では Issue 文脈が無いのでスキップ
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "workflow_dispatch detected; skipping Codex execution (diagnostic run)"
+            echo "should_skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           ISSUE_NUMBER="${{ github.event.issue.number }}"
 
           if [ -z "${OPENAI_API_KEY:-}" ]; then
