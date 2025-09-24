@@ -148,16 +148,17 @@ jobs:
       - name: Show Codex CLI auth status
         if: ${{ always() }}
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # OPENAI_API_KEY を意図的に除外して、CODEX_AUTH_JSON のみで認証テスト
           CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
         run: |
           set -euo pipefail
           echo "Auth method (from config): ${{ steps.auth.outputs.auth_method }}"
           if command -v codex >/dev/null 2>&1; then
             codex --version || true
-            echo "---- codex /status ----"
-            codex /status || true
-            echo "-----------------------"
+            echo "---- Testing CODEX_AUTH_JSON authentication ----"
+            echo "OPENAI_API_KEY is intentionally not set for this test"
+            codex exec -c model_max_output_tokens=1 "Test" || echo "サブスクの範囲内で認証できていません。API KEYを使っている可能性が高いです。"
+            echo "-----------------------------------------------"
           else
             echo "codex not found in PATH"
           fi
