@@ -27,8 +27,8 @@ jobs:
       # actions: write は不要なら外してOK
 
     env:
-      # 利用するOpenAIモデル。リポジトリ/環境変数 vars.OPENAI_MODEL が未設定なら gpt-4o-mini を使用
-      OPENAI_MODEL: ${{ vars.OPENAI_MODEL != '' && vars.OPENAI_MODEL || 'gpt-4o-mini' }}
+      # 利用するOpenAIモデル。リポジトリ/環境変数 vars.OPENAI_MODEL が未設定なら gpt-5-codex を使用
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL != '' && vars.OPENAI_MODEL || 'gpt-5-codex' }}
 
     steps:
       - uses: actions/checkout@v4
