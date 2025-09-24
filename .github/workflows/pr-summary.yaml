@@ -1,4 +1,4 @@
-name: PR summary by codex
+name: PR summary with Codex
 
 on:
   pull_request_target:
