@@ -8,3 +8,8 @@
 * 作業要約: 全体アーキテクチャ仕様書、4 マイクロサービス分の詳細設計書・OpenAPI・実装計画を作成し、各サービスに対するSOWとGitHub Issue本文を整備した。
 * Next Step: ユーザー側でGitHubリポジトリ作成・APIキー準備後、各Issueを起点にTDD実装を進める。
 ---
+---
+[MILESTONE] - 2025-09-24T02:57:36Z
+* 作業要約: IndexConstituentService向けGitHub Issue本文をテンプレート準拠で更新し、Tidy First/TDD手順と検証項目を明確化した。
+* Next Step: 開発担当者がIssueに従ってTDD実装を進め、完了後にnpm run build && npm testで検証する。
+---
