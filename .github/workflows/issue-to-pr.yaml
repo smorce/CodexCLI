@@ -1,7 +1,12 @@
 name: Issue to PR with Codex
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Execute Codex for this issue number (required for manual run)'
+        required: true
+        type: string
   issues:
     types: [labeled]
 
@@ -73,21 +78,20 @@ jobs:
           retry() { n=0; until [ $n -ge 5 ]; do npm install -g @openai/codex && break; n=$((n+1)); echo "codex install retry $n"; sleep $((n*5)); done; }
           retry true
 
-      - name: "Preflight: Check OpenAI API key and reachability"
+      - name: "Preflight: Check OpenAI API key, determine issue, and reachability"
         id: preflight
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          # Manual dispatch では Issue 文脈が無いのでスキップ
+          # Determine ISSUE_NUMBER for both triggers
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "workflow_dispatch detected; skipping Codex execution (diagnostic run)"
-            echo "should_skip=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            ISSUE_NUMBER="${{ github.event.inputs.issue_number }}"
+          else
+            ISSUE_NUMBER="${{ github.event.issue.number }}"
           fi
-
-          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          echo "Target ISSUE_NUMBER=$ISSUE_NUMBER"
 
           if [ -z "${OPENAI_API_KEY:-}" ]; then
             : > preflight.md
@@ -126,6 +130,21 @@ jobs:
             exit 0
           fi
 
+          # Fetch Issue title/body for downstream steps
+          ISSUE_TITLE=$(gh issue view "$ISSUE_NUMBER" --json title --jq '.title' || true)
+          ISSUE_BODY=$(gh issue view "$ISSUE_NUMBER" --json body  --jq '.body'  || true)
+
+          # Export outputs
+          echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_OUTPUT"
+          {
+            echo 'issue_title<<EOF'
+            echo "$ISSUE_TITLE"
+            echo 'EOF'
+            echo 'issue_body<<EOF'
+            echo "$ISSUE_BODY"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
           echo "should_skip=false" >> "$GITHUB_OUTPUT"
 
       # ここを追加／上書き（認証方式=APIキー、モデルは環境変数 OPENAI_MODEL）
@@ -153,7 +172,7 @@ jobs:
 
           git fetch --prune origin
           BASE=origin/main
-          BRANCH="codex/issue-${{ github.event.issue.number }}"
+          BRANCH="codex/issue-${{ steps.preflight.outputs.issue_number }}"
           if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
             echo "Remote branch exists. Tracking and rebasing..."
             git switch -C "$BRANCH" --track "origin/$BRANCH"
@@ -163,8 +182,8 @@ jobs:
             git switch -c "$BRANCH" "$BASE"
           fi
 
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          ISSUE_BODY="${{ github.event.issue.body }}"
+          ISSUE_TITLE="${{ steps.preflight.outputs.issue_title }}"
+          ISSUE_BODY="${{ steps.preflight.outputs.issue_body }}"
 
           PROMPT="$(printf '%s\n\n%s\n\n%s\n' \
             "$ISSUE_TITLE" \
@@ -176,9 +195,9 @@ jobs:
 
           if [[ -n $(git status --porcelain) ]]; then
             git add -A
-            git commit -m "feat: #${{ github.event.issue.number }} - $ISSUE_TITLE" \
+            git commit -m "feat: #${{ steps.preflight.outputs.issue_number }} - $ISSUE_TITLE" \
                         -m "Automated implementation by Codex CLI based on issue requirements." \
-                        -m "Closes #${{ github.event.issue.number }}"
+                         -m "Closes #${{ steps.preflight.outputs.issue_number }}"
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
           else
             echo "No changes to commit"
@@ -195,9 +214,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          BRANCH="codex/issue-${{ github.event.issue.number }}"
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          BRANCH="codex/issue-${{ steps.preflight.outputs.issue_number }}"
+          ISSUE_TITLE="${{ steps.preflight.outputs.issue_title }}"
+          ISSUE_NUMBER="${{ steps.preflight.outputs.issue_number }}"
 
           # fetch latest base
           git fetch origin main
@@ -249,7 +268,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          ISSUE_NUMBER="${{ steps.preflight.outputs.issue_number }}"
           BRANCH="codex/issue-${ISSUE_NUMBER}"
           
           # コメントをファイルに書き出し（heredocを避けてprintfで生成）
@@ -273,7 +292,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          ISSUE_NUMBER="${{ steps.preflight.outputs.issue_number }}"
           : > issue-comment.md
           printf '%s\n' \
             '🤖 自動実装を試行しましたが、リポジトリに変更は見つかりませんでした。' \

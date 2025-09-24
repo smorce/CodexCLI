@@ -75,23 +75,22 @@ jobs:
           # 要約ファイルが生成されたかチェック
           if [ ! -f "codex-summary.md" ]; then
             echo "要約ファイルが生成されませんでした。デフォルトの要約を作成します。"
-            cat > codex-summary.md << EOF
-## 📋 PR要約
-
-**PR**: ${PR_TITLE}
-
-### 🎯 主な変更内容
-このPRは自動実装により作成されました。詳細な変更内容については差分をご確認ください。
-
-### 🔍 レビューポイント
-- コードの品質とTDD原則の遵守
-- OpenAPI仕様との整合性
-- テストカバレッジの確認
-- セキュリティ実装の妥当性
-
----
-*この要約はCodex CLIによって自動生成されました。*
-EOF
+            : > codex-summary.md
+            printf '%s\n' '## 📋 PR要約' >> codex-summary.md
+            printf '%s\n' '' >> codex-summary.md
+            printf '%s\n' "**PR**: ${PR_TITLE}" >> codex-summary.md
+            printf '%s\n' '' >> codex-summary.md
+            printf '%s\n' '### 🎯 主な変更内容' >> codex-summary.md
+            printf '%s\n' 'このPRは自動実装により作成されました。詳細な変更内容については差分をご確認ください。' >> codex-summary.md
+            printf '%s\n' '' >> codex-summary.md
+            printf '%s\n' '### 🔍 レビューポイント' >> codex-summary.md
+            printf '%s\n' '- コードの品質とTDD原則の遵守' >> codex-summary.md
+            printf '%s\n' '- OpenAPI仕様との整合性' >> codex-summary.md
+            printf '%s\n' '- テストカバレッジの確認' >> codex-summary.md
+            printf '%s\n' '- セキュリティ実装の妥当性' >> codex-summary.md
+            printf '%s\n' '' >> codex-summary.md
+            printf '%s\n' '---' >> codex-summary.md
+            printf '%s\n' '*この要約はCodex CLIによって自動生成されました。*' >> codex-summary.md
           fi
 
           # 要約をPRにコメント
