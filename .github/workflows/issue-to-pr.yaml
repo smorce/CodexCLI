@@ -69,7 +69,7 @@ jobs:
           retry() { n=0; until [ $n -ge 5 ]; do npm install -g @openai/codex && break; n=$((n+1)); echo "codex install retry $n"; sleep $((n*5)); done; }
           retry true
 
-      - name: Preflight: Check OpenAI API key and reachability
+      - name: "Preflight: Check OpenAI API key and reachability"
         id: preflight
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -162,7 +162,7 @@ jobs:
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
 
-          PROMPT="$(printf '%s\n\n%s\n\n%s\n%s\n%s\n%s' \
+          PROMPT="$(printf '%s\n\n%s\n\n%s\n' \
             "$ISSUE_TITLE" \
             "$ISSUE_BODY" \
             "最後に 'npm run build && npm test' を実行し、エラーが出ないことを確認してください。.git 等のドットファイル/フォルダは変更しないでください。")"
