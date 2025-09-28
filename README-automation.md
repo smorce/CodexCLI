@@ -19,7 +19,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/trigger-issue-to-pr.
 フローになった。
 
 
-
+==================
 GitHub Actions 上で Codex を ChatGPT 認証で動かすフローを追加しました。secrets.CODEX_AUTH_JSON が存在する場合は preferred_auth_method = "chatgpt" を設定し、~/.codex/auth.json を復元して ChatGPT サブスク側の利用枠で実行します。なければ従来どおり API key モードで動作します。
 - 使い方:
   - ローカルで codex --login → ~/.codex/auth.json を取得
