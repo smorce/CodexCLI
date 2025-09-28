@@ -1,0 +1,282 @@
+openapi: 3.0.3
+info:
+  title: Market Data Service API
+  version: 1.0.0
+servers:
+  - url: https://api.sptop10frontier.com
+paths:
+  /market/prices:
+    get:
+      summary: Get price series for a symbol
+      operationId: getMarketPrices
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: symbol
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 8
+        - in: query
+          name: interval
+          required: false
+          schema:
+            type: string
+            enum: [15m, 1d]
+        - in: query
+          name: start
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: end
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Price series
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/PriceSeriesResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /market/statistics/top10:
+    get:
+      summary: Get covariance matrix and mean returns for top 10 symbols
+      operationId: getTop10Statistics
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Statistics snapshot
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/StatisticsResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /market/recompute:
+    post:
+      summary: Trigger statistics recompute job
+      operationId: triggerStatisticsRecompute
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/RecomputeRequest'
+      responses:
+        '202':
+          description: Job accepted
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/RecomputeAccepted'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+  schemas:
+    PriceSeriesResponse:
+      type: object
+      required:
+        - symbol
+        - interval
+        - data
+        - meta
+      properties:
+        symbol:
+          type: string
+        interval:
+          type: string
+        data:
+          type: array
+          items:
+            : '#/components/schemas/PricePoint'
+        meta:
+          type: object
+          properties:
+            asOf:
+              type: string
+              format: date-time
+            timezone:
+              type: string
+            traceId:
+              type: string
+    PricePoint:
+      type: object
+      required:
+        - bucket
+        - open
+        - high
+        - low
+        - close
+        - volume
+      properties:
+        bucket:
+          type: string
+          format: date-time
+        open:
+          type: number
+          format: double
+        high:
+          type: number
+          format: double
+        low:
+          type: number
+          format: double
+        close:
+          type: number
+          format: double
+        volume:
+          type: number
+          format: double
+    StatisticsResponse:
+      type: object
+      required:
+        - asOf
+        - meanReturns
+        - covarianceMatrix
+      properties:
+        asOf:
+          type: string
+          format: date-time
+        meanReturns:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        covarianceMatrix:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: number
+              format: double
+        volatility:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+    RecomputeRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        windowDays:
+          type: integer
+          minimum: 30
+          maximum: 365
+        force:
+          type: boolean
+    RecomputeAccepted:
+      type: object
+      required:
+        - jobId
+        - status
+        - acceptedAt
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED]
+        acceptedAt:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string

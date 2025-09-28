@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: Portfolio Optimization Service API
+  version: 1.0.0
+servers:
+  - url: https://api.sptop10frontier.com
+paths:
+  /portfolio/efficient-frontier:
+    post:
+      summary: Compute efficient frontier
+      operationId: computeEfficientFrontier
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/EfficientFrontierRequest'
+      responses:
+        '200':
+          description: Efficient frontier points
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/EfficientFrontierResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /portfolio/optimal-weights:
+    post:
+      summary: Compute optimal weights for given objective
+      operationId: computeOptimalWeights
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/OptimalWeightsRequest'
+      responses:
+        '200':
+          description: Optimal weights result
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/OptimalWeightsResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /portfolio/jobs/{jobId}:
+    get:
+      summary: Get optimization job status
+      operationId: getOptimizationJob
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Job status response
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/JobStatusResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict detected
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+  schemas:
+    EfficientFrontierRequest:
+      type: object
+      required:
+        - constraints
+        - steps
+      properties:
+        constraints:
+          : '#/components/schemas/ConstraintSet'
+        steps:
+          type: integer
+          minimum: 10
+          maximum: 100
+        includePoints:
+          type: boolean
+          default: true
+    ConstraintSet:
+      type: object
+      required:
+        - lowerBounds
+        - upperBounds
+      properties:
+        lowerBounds:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        upperBounds:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        blacklist:
+          type: array
+          items:
+            type: string
+        targetReturn:
+          type: number
+          format: double
+          nullable: true
+        targetRisk:
+          type: number
+          format: double
+          nullable: true
+    EfficientFrontierResponse:
+      type: object
+      required:
+        - jobId
+        - frontier
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        frontier:
+          type: array
+          items:
+            : '#/components/schemas/FrontierPoint'
+        meta:
+          : '#/components/schemas/ResponseMeta'
+    FrontierPoint:
+      type: object
+      required:
+        - expectedReturn
+        - risk
+        - sharpeRatio
+        - weights
+      properties:
+        expectedReturn:
+          type: number
+          format: double
+        risk:
+          type: number
+          format: double
+        sharpeRatio:
+          type: number
+          format: double
+        weights:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+    OptimalWeightsRequest:
+      type: object
+      required:
+        - objectiveType
+        - constraints
+      properties:
+        objectiveType:
+          type: string
+          enum: [RETURN_MAX, RISK_MIN, SHARPE_MAX]
+        targetValue:
+          type: number
+          format: double
+          nullable: true
+        constraints:
+          : '#/components/schemas/ConstraintSet'
+    OptimalWeightsResponse:
+      type: object
+      required:
+        - jobId
+        - weights
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        weights:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        diagnostics:
+          type: object
+          properties:
+            expectedReturn:
+              type: number
+              format: double
+            risk:
+              type: number
+              format: double
+            sharpeRatio:
+              type: number
+              format: double
+        meta:
+          : '#/components/schemas/ResponseMeta'
+    JobStatusResponse:
+      type: object
+      required:
+        - jobId
+        - status
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, SUCCEEDED, FAILED]
+        resultLocation:
+          type: string
+          format: uri
+          nullable: true
+        error:
+          type: object
+          nullable: true
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        meta:
+          : '#/components/schemas/ResponseMeta'
+    ResponseMeta:
+      type: object
+      properties:
+        asOf:
+          type: string
+          format: date-time
+        traceId:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string

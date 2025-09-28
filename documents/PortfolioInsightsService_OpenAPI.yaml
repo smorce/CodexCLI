@@ -1,0 +1,258 @@
+openapi: 3.0.3
+info:
+  title: Portfolio Insights Service API
+  version: 1.0.0
+servers:
+  - url: https://api.sptop10frontier.com
+paths:
+  /insights/summary/{portfolioId}:
+    get:
+      summary: Get portfolio summary metrics
+      operationId: getPortfolioSummary
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: portfolioId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Portfolio summary
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/SummaryResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /insights/report:
+    post:
+      summary: Request portfolio report generation
+      operationId: requestPortfolioReport
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/ReportRequest'
+      responses:
+        '202':
+          description: Report job accepted
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/ReportAccepted'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /insights/report/{jobId}:
+    get:
+      summary: Get report job status
+      operationId: getReportStatus
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Report job status
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/ReportStatus'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict detected
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+  schemas:
+    SummaryResponse:
+      type: object
+      required:
+        - portfolioId
+        - metrics
+        - allocations
+        - meta
+      properties:
+        portfolioId:
+          type: string
+          format: uuid
+        metrics:
+          type: object
+          properties:
+            expectedReturn:
+              type: number
+              format: double
+            risk:
+              type: number
+              format: double
+            sharpeRatio:
+              type: number
+              format: double
+            diversificationScore:
+              type: number
+              format: double
+        allocations:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+        meta:
+          : '#/components/schemas/ResponseMeta'
+    ReportRequest:
+      type: object
+      required:
+        - portfolioId
+        - format
+      properties:
+        portfolioId:
+          type: string
+          format: uuid
+        format:
+          type: string
+          enum: [pdf, html]
+    ReportAccepted:
+      type: object
+      required:
+        - jobId
+        - status
+        - acceptedAt
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED]
+        acceptedAt:
+          type: string
+          format: date-time
+    ReportStatus:
+      type: object
+      required:
+        - jobId
+        - status
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, SUCCEEDED, FAILED]
+        downloadUrl:
+          type: string
+          format: uri
+          nullable: true
+        error:
+          type: object
+          nullable: true
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        meta:
+          : '#/components/schemas/ResponseMeta'
+    ResponseMeta:
+      type: object
+      properties:
+        asOf:
+          type: string
+          format: date-time
+        traceId:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string

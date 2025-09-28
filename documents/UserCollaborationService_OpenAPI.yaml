@@ -1,0 +1,314 @@
+openapi: 3.0.3
+info:
+  title: User Collaboration Service API
+  version: 1.0.0
+servers:
+  - url: https://api.sptop10frontier.com
+paths:
+  /workspaces:
+    post:
+      summary: Create workspace
+      operationId: createWorkspace
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/WorkspaceCreateRequest'
+      responses:
+        '201':
+          description: Workspace created
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/WorkspaceResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /workspaces/{workspaceId}:
+    get:
+      summary: Get workspace detail
+      operationId: getWorkspace
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: workspaceId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workspace detail
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/WorkspaceResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /workspaces/{workspaceId}/members:
+    post:
+      summary: Invite or update workspace member
+      operationId: upsertWorkspaceMember
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: workspaceId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/WorkspaceMemberRequest'
+      responses:
+        '200':
+          description: Membership created or updated
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/WorkspaceMemberResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /workspaces/{workspaceId}/comments:
+    post:
+      summary: Post workspace comment
+      operationId: createWorkspaceComment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: workspaceId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/CommentCreateRequest'
+      responses:
+        '201':
+          description: Comment created
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/CommentResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+  schemas:
+    WorkspaceCreateRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+    WorkspaceResponse:
+      type: object
+      required:
+        - workspaceId
+        - name
+        - role
+        - createdAt
+      properties:
+        workspaceId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        role:
+          type: string
+          enum: [ADMIN, PORTFOLIO_MANAGER, ANALYST, VIEWER]
+        createdAt:
+          type: string
+          format: date-time
+        ownerId:
+          type: string
+          format: uuid
+    WorkspaceMemberRequest:
+      type: object
+      required:
+        - userId
+        - role
+      properties:
+        userId:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [ADMIN, PORTFOLIO_MANAGER, ANALYST, VIEWER]
+    WorkspaceMemberResponse:
+      type: object
+      required:
+        - membershipId
+        - userId
+        - role
+        - updatedAt
+      properties:
+        membershipId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [ADMIN, PORTFOLIO_MANAGER, ANALYST, VIEWER]
+        updatedAt:
+          type: string
+          format: date-time
+    CommentCreateRequest:
+      type: object
+      required:
+        - portfolioId
+        - body
+      properties:
+        portfolioId:
+          type: string
+          format: uuid
+        body:
+          type: string
+          maxLength: 4096
+    CommentResponse:
+      type: object
+      required:
+        - commentId
+        - portfolioId
+        - body
+        - authorId
+        - createdAt
+      properties:
+        commentId:
+          type: string
+          format: uuid
+        portfolioId:
+          type: string
+          format: uuid
+        body:
+          type: string
+        authorId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        traceId:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string

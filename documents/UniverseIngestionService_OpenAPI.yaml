@@ -1,0 +1,268 @@
+openapi: 3.0.3
+info:
+  title: Universe Ingestion Service API
+  version: 1.0.0
+servers:
+  - url: https://api.sptop10frontier.com
+    description: Production
+  - url: https://staging.api.sptop10frontier.com
+    description: Staging
+paths:
+  /universe/top10:
+    get:
+      summary: Get current top 10 symbols
+      operationId: getTop10Universe
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: asOf
+          schema:
+            type: string
+            format: date-time
+          description: Optional snapshot timestamp (RFC3339)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/UniverseResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /universe/sync:
+    post:
+      summary: Trigger universe sync job
+      operationId: triggerUniverseSync
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/SyncRequest'
+      responses:
+        '202':
+          description: Sync accepted
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/SyncAccepted'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /universe/sync/{syncJobId}:
+    get:
+      summary: Get sync job status
+      operationId: getSyncStatus
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: syncJobId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Sync job status
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/SyncStatus'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+  schemas:
+    UniverseResponse:
+      type: object
+      required:
+        - data
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            : '#/components/schemas/UniverseItem'
+          minItems: 10
+          maxItems: 10
+        meta:
+          type: object
+          required:
+            - asOf
+            - source
+            - checksum
+          properties:
+            asOf:
+              type: string
+              format: date-time
+            source:
+              type: string
+            checksum:
+              type: string
+            traceId:
+              type: string
+    UniverseItem:
+      type: object
+      required:
+        - symbol
+        - name
+        - marketCap
+        - sector
+      properties:
+        symbol:
+          type: string
+          minLength: 1
+          maxLength: 8
+        name:
+          type: string
+        marketCap:
+          type: number
+          format: double
+          minimum: 0
+        sector:
+          type: string
+        weight:
+          type: number
+          format: double
+          minimum: 0
+    SyncRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        sourceOverride:
+          type: string
+          minLength: 1
+          maxLength: 32
+    SyncAccepted:
+      type: object
+      required:
+        - syncJobId
+        - status
+        - acceptedAt
+      properties:
+        syncJobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED]
+        acceptedAt:
+          type: string
+          format: date-time
+    SyncStatus:
+      type: object
+      required:
+        - syncJobId
+        - status
+        - startedAt
+      properties:
+        syncJobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, RUNNING, SUCCEEDED, FAILED]
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+          nullable: true
+        error:
+          type: object
+          nullable: true
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string

@@ -1,0 +1,288 @@
+openapi: 3.0.3
+info:
+  title: Notification Orchestrator API
+  version: 1.0.0
+servers:
+  - url: https://api.sptop10frontier.com
+paths:
+  /notifications/dispatch:
+    post:
+      summary: Dispatch notification event
+      operationId: dispatchNotification
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/DispatchRequest'
+      responses:
+        '202':
+          description: Dispatch accepted
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/DispatchAccepted'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '409':
+          : '#/components/responses/Conflict'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /notifications/dispatch/{dispatchId}:
+    get:
+      summary: Get notification dispatch status
+      operationId: getDispatchStatus
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: dispatchId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Dispatch status response
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/DispatchStatus'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+  /notifications/preferences:
+    post:
+      summary: Upsert notification preference
+      operationId: upsertNotificationPreference
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              : '#/components/schemas/PreferenceRequest'
+      responses:
+        '200':
+          description: Preference updated
+          content:
+            application/json:
+              schema:
+                : '#/components/schemas/PreferenceResponse'
+        '401':
+          : '#/components/responses/Unauthorized'
+        '403':
+          : '#/components/responses/Forbidden'
+        '404':
+          : '#/components/responses/NotFound'
+        '422':
+          : '#/components/responses/UnprocessableEntity'
+        '429':
+          : '#/components/responses/TooManyRequests'
+        '500':
+          : '#/components/responses/InternalError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict detected
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    TooManyRequests:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+    InternalError:
+      description: Internal error
+      content:
+        application/json:
+          schema:
+            : '#/components/schemas/ErrorResponse'
+  schemas:
+    DispatchRequest:
+      type: object
+      required:
+        - eventType
+      properties:
+        eventType:
+          type: string
+          enum: [UNIVERSE_UPDATED, MARKET_RECOMPUTED, PORTFOLIO_COMPLETED, REPORT_READY]
+        targets:
+          type: array
+          items:
+            type: string
+            format: uuid
+        payload:
+          type: object
+          additionalProperties: true
+    DispatchAccepted:
+      type: object
+      required:
+        - dispatchId
+        - status
+        - acceptedAt
+      properties:
+        dispatchId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED]
+        acceptedAt:
+          type: string
+          format: date-time
+    DispatchStatus:
+      type: object
+      required:
+        - dispatchId
+        - status
+        - attempts
+      properties:
+        dispatchId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [QUEUED, DELIVERING, SUCCEEDED, FAILED]
+        attempts:
+          type: integer
+          minimum: 0
+        lastAttemptAt:
+          type: string
+          format: date-time
+          nullable: true
+        error:
+          type: object
+          nullable: true
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+        meta:
+          : '#/components/schemas/ResponseMeta'
+    PreferenceRequest:
+      type: object
+      required:
+        - channel
+        - enabled
+      properties:
+        channel:
+          type: string
+          enum: [email, webhook, slack]
+        enabled:
+          type: boolean
+        config:
+          type: object
+          additionalProperties: true
+        quietHours:
+          type: array
+          items:
+            type: object
+            required:
+              - start
+              - end
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+    PreferenceResponse:
+      type: object
+      required:
+        - preferenceId
+        - channel
+        - enabled
+        - updatedAt
+      properties:
+        preferenceId:
+          type: string
+          format: uuid
+        channel:
+          type: string
+          enum: [email, webhook, slack]
+        enabled:
+          type: boolean
+        updatedAt:
+          type: string
+          format: date-time
+        quietHours:
+          type: array
+          items:
+            type: object
+            properties:
+              start:
+                type: string
+              end:
+                type: string
+    ResponseMeta:
+      type: object
+      properties:
+        traceId:
+          type: string
+        asOf:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+        - traceId
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string
