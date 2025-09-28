@@ -1,3 +1,4 @@
+codex -m gpt-5-codex --yolo -c model_reasoning_effort="high" --search "$@"
 ---
 prompts/Instructions1.md を読んで、そこに書いてある指示を実行してください。
 ---
