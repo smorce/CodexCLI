@@ -1,3 +1,8 @@
+---
+prompts/Instructions1.md を読んで、そこに書いてある指示を実行してください。
+---
+を実行。
+
 LLM に temp ディレクトリの Issue 本文を使いつつ Issue（codex ラベル付き）を作成してもらい、次に
 ```
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/trigger-issue-to-pr.ps1 -IssueNumber 5

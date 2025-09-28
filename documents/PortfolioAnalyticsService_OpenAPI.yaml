@@ -1,0 +1,333 @@
+openapi: 3.0.3
+info:
+  title: PortfolioAnalytics Service API
+  version: 1.0.0
+  description: 効率的フロンティアおよびポートフォリオ最適化のための API
+servers:
+  - url: https://api.sptop10frontier.example.com
+    description: Production
+security:
+  - bearerAuth: []
+paths:
+  /analytics/frontier:
+    post:
+      summary: 効率的フロンティア計算ジョブの作成
+      operationId: createFrontierJob
+      tags: [Analytics]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FrontierRequest"
+      responses:
+        "202":
+          description: ジョブ受領
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobSubmissionResponse"
+        "401": { "$ref": "#/components/responses/Unauthorized" }
+        "403": { "$ref": "#/components/responses/Forbidden" }
+        "422": { "$ref": "#/components/responses/ValidationError" }
+        "429": { "$ref": "#/components/responses/RateLimited" }
+        "500": { "$ref": "#/components/responses/InternalError" }
+  /analytics/optimization:
+    post:
+      summary: 目標指標に応じた最適配分ジョブの作成
+      operationId: createOptimizationJob
+      tags: [Analytics]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OptimizationRequest"
+      responses:
+        "202":
+          description: ジョブ受領
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobSubmissionResponse"
+        "401": { "$ref": "#/components/responses/Unauthorized" }
+        "403": { "$ref": "#/components/responses/Forbidden" }
+        "422": { "$ref": "#/components/responses/ValidationError" }
+        "429": { "$ref": "#/components/responses/RateLimited" }
+        "500": { "$ref": "#/components/responses/InternalError" }
+  /analytics/jobs/{jobId}:
+    get:
+      summary: ジョブ状態と結果の取得
+      operationId: getJobById
+      tags: [Analytics]
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: ジョブ詳細
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobDetail"
+        "401": { "$ref": "#/components/responses/Unauthorized" }
+        "403": { "$ref": "#/components/responses/Forbidden" }
+        "404": { "$ref": "#/components/responses/NotFound" }
+        "409": { "$ref": "#/components/responses/JobRunning" }
+        "500": { "$ref": "#/components/responses/InternalError" }
+  /analytics/constraints:
+    get:
+      summary: 制約テンプレートの取得
+      operationId: listConstraintTemplates
+      tags: [Metadata]
+      responses:
+        "200":
+          description: 制約テンプレート一覧
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConstraintTemplateList"
+        "401": { "$ref": "#/components/responses/Unauthorized" }
+        "403": { "$ref": "#/components/responses/Forbidden" }
+        "500": { "$ref": "#/components/responses/InternalError" }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    FrontierRequest:
+      type: object
+      required: [lookbackDays, samplingFrequency, includeExDividend, maxAssets, constraintSets]
+      properties:
+        lookbackDays:
+          type: integer
+          minimum: 7
+          maximum: 365
+          default: 90
+        samplingFrequency:
+          type: string
+          enum: [daily, weekly]
+          default: daily
+        includeExDividend:
+          type: boolean
+          default: true
+        maxAssets:
+          type: integer
+          minimum: 5
+          maximum: 10
+          default: 10
+        riskFreeRate:
+          type: number
+          format: float
+          minimum: -0.05
+          maximum: 0.15
+          default: 0.02
+        constraintSets:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConstraintInput"
+    OptimizationRequest:
+      allOf:
+        - $ref: "#/components/schemas/FrontierRequest"
+        - type: object
+          required: [objectiveType]
+          properties:
+            objectiveType:
+              type: string
+              enum: [targetReturn, targetVolatility, maxSharpe]
+            objectiveValue:
+              type: number
+              format: float
+    ConstraintInput:
+      type: object
+      required: [id, bounds]
+      properties:
+        id:
+          type: string
+          description: 制約識別子
+        label:
+          type: string
+        bounds:
+          type: object
+          required: [minWeight, maxWeight]
+          properties:
+            minWeight:
+              type: number
+              format: float
+              minimum: 0
+            maxWeight:
+              type: number
+              format: float
+              maximum: 1
+            tickers:
+              type: array
+              items:
+                type: string
+    JobSubmissionResponse:
+      type: object
+      required: [jobId, status, estimatedCompletionSeconds]
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, running, succeeded, failed, cancelled]
+        estimatedCompletionSeconds:
+          type: integer
+          minimum: 0
+    FrontierPoint:
+      type: object
+      required: [pointIndex, expectedReturn, volatility, sharpeRatio, weights]
+      properties:
+        pointIndex:
+          type: integer
+        expectedReturn:
+          type: number
+          format: float
+        volatility:
+          type: number
+          format: float
+        sharpeRatio:
+          type: number
+          format: float
+        weights:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+    OptimizationSolution:
+      type: object
+      required: [targetType, achievedReturn, achievedVolatility, sharpeRatio, weights]
+      properties:
+        targetType:
+          type: string
+        targetValue:
+          type: number
+          format: float
+        achievedReturn:
+          type: number
+          format: float
+        achievedVolatility:
+          type: number
+          format: float
+        sharpeRatio:
+          type: number
+          format: float
+        weights:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+        diagnostics:
+          type: object
+          additionalProperties: true
+    JobDetail:
+      type: object
+      required: [jobId, status, submittedAt]
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, running, succeeded, failed, cancelled]
+        submittedAt:
+          type: string
+          format: date-time
+        startedAt:
+          type: string
+          format: date-time
+          nullable: true
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        progressPct:
+          type: number
+          format: float
+        inputs:
+          type: object
+          additionalProperties: true
+        frontier:
+          type: array
+          items:
+            $ref: "#/components/schemas/FrontierPoint"
+        solution:
+          $ref: "#/components/schemas/OptimizationSolution"
+        telemetry:
+          type: object
+          properties:
+            traceId:
+              type: string
+              format: uuid
+            calcTimeMs:
+              type: integer
+    ConstraintTemplateList:
+      type: object
+      required: [constraintTemplates]
+      properties:
+        constraintTemplates:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConstraintInput"
+    ErrorResponse:
+      type: object
+      required: [code, message, traceId]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        traceId:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: 認証が必要です
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
+    Forbidden:
+      description: アクセス権がありません
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
+    NotFound:
+      description: リソースが存在しません
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
+    JobRunning:
+      description: ジョブがまだ実行中です
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
+    ValidationError:
+      description: 入力値バリデーションエラー
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
+    RateLimited:
+      description: レート制限に達しました
+      headers:
+        Retry-After:
+          description: 再試行可能となる秒数
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
+    InternalError:
+      description: サーバー内部でエラーが発生しました
+      content:
+        application/json:
+          schema: { "$ref": "#/components/schemas/ErrorResponse" }
