@@ -7,5 +7,6 @@ export default defineConfig({
       provider: "v8",
     },
     reporters: ["default"],
+    setupFiles: ['./tests/setup.ts'],
   },
 });

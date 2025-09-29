@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Enum for the type of universe event.
+enum UniverseEventType {
+  SYNC_SUCCESS
+  SYNC_FAILURE
+}
+
+/// Stores snapshots of the top 10 universe of stocks at a given time.
+model universe_snapshots {
+  id          String   @id @default(uuid())
+  as_of       DateTime @unique
+  top_symbols String[]
+  source      String
+  created_at  DateTime @default(now())
+  checksum    String
+  metadata    Json
+
+  events universe_events[]
+
+  @@map("universe_snapshots")
+}
+
+/// Records events related to the universe synchronization process.
+model universe_events {
+  id          String            @id @default(uuid())
+  snapshot_id String
+  snapshot    universe_snapshots @relation(fields: [snapshot_id], references: [id])
+  event_type  UniverseEventType
+  payload     Json
+  occurred_at DateTime          @default(now())
+  trace_id    String
+
+  @@map("universe_events")
+}
