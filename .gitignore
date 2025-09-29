@@ -185,3 +185,8 @@ vertex-ai-gemini.json
 .files/
 【bk v1】chainlit_app.py
 .cursor/mcp.json
+/generated/prisma
+
+# Prisma SQLite test databases
+prisma/test-*.db
+prisma/test-*.db-journal

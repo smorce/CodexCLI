@@ -1,60 +1,62 @@
 {
-    "name":  "codexcli",
-    "version":  "1.0.0",
-    "description":  "",
-    "main":  "index.js",
-    "directories":  {
-                        "doc":  "docs",
-                        "test":  "tests"
-                    },
-    "scripts":  {
-                    "test:run":  "vitest run",
-                    "build":  "tsup src/worker.ts --format esm --dts --minify",
-                    "test:watch":  "vitest",
-                    "typecheck":  "tsc --noEmit",
-                    "lint":  "echo \u0027lint stub\u0027",
-                    "test":  "vitest"
-                },
-    "repository":  {
-                       "type":  "git",
-                       "url":  "git+https://github.com/smorce/CodexCLI.git"
-                   },
-    "keywords":  [
-
-                 ],
-    "author":  "",
-    "license":  "ISC",
-    "type":  "module",
-    "bugs":  {
-                 "url":  "https://github.com/smorce/CodexCLI/issues"
-             },
-    "homepage":  "https://github.com/smorce/CodexCLI#readme",
-    "dependencies":  {
-                         "@neondatabase/serverless":  "^1.0.1",
-                         "hono":  "^4.9.8",
-                         "jose":  "^6.1.0",
-                         "pg":  "^8.16.3",
-                         "pg-mem":  "^3.0.5",
-                         "uuid":  "^13.0.0",
-                         "zod":  "^4.1.11"
-                     },
-    "devDependencies":  {
-                            "@cloudflare/workers-types":  "^4.20250921.0",
-                            "@types/node":  "^24.5.2",
-                            "@types/pg":  "^8.15.5",
-                            "@vitest/coverage-v8":  "^3.2.4",
-                            "ajv":  "^8.17.1",
-                            "ajv-formats":  "^3.0.1",
-                            "miniflare":  "^4.20250917.0",
-                            "tsup":  "^8.5.0",
-                            "tsx":  "^4.20.5",
-                            "typescript":  "^5.9.2",
-                            "vitest":  "^3.2.4",
-                            "yaml":  "^2.8.1"
-                        },
-    "exports":  {
-                    ".":  {
-                              "import":  "./dist/worker.js"
-                          }
-                }
+    "name": "codexcli",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs",
+        "test": "tests"
+    },
+    "scripts": {
+        "test:run": "vitest run",
+        "build": "tsup src/worker.ts --format esm --dts --minify",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit",
+        "lint": "echo 'lint stub'",
+        "test": "vitest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/smorce/CodexCLI.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "module",
+    "bugs": {
+        "url": "https://github.com/smorce/CodexCLI/issues"
+    },
+    "homepage": "https://github.com/smorce/CodexCLI#readme",
+    "dependencies": {
+        "@hono/zod-validator": "^0.7.3",
+        "@neondatabase/serverless": "^1.0.1",
+        "@prisma/client": "^6.16.2",
+        "hono": "^4.9.8",
+        "jose": "^6.1.0",
+        "pg": "^8.16.3",
+        "pg-mem": "^3.0.5",
+        "uuid": "^13.0.0",
+        "zod": "^4.1.11"
+    },
+    "devDependencies": {
+        "@cloudflare/workers-types": "^4.20250921.0",
+        "@types/node": "^24.5.2",
+        "@types/pg": "^8.15.5",
+        "@vitest/coverage-v8": "^3.2.4",
+        "ajv": "^8.17.1",
+        "ajv-formats": "^3.0.1",
+        "execa": "^9.6.0",
+        "miniflare": "^4.20250917.0",
+        "prisma": "^6.16.2",
+        "tsup": "^8.5.0",
+        "tsx": "^4.20.5",
+        "typescript": "^5.9.2",
+        "vitest": "^3.2.4",
+        "yaml": "^2.8.1"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/worker.js"
+        }
+    }
 }

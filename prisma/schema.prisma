@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// This is the single source of truth for the database connection.
+// For testing, this will be programmatically replaced with a SQLite provider.
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum JobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum JobType {
+  FRONTIER
+  OPTIMAL
+}
+
+model optimization_jobs {
+  id              String     @id @default(uuid())
+  workspace_id    String
+  user_id         String
+  job_type        JobType
+  payload         Json
+  status          JobStatus  @default(PENDING)
+  result_location String?
+  created_at      DateTime   @default(now())
+  started_at      DateTime?
+  finished_at     DateTime?
+  trace_id        String
+
+  results optimization_results?
+
+  @@index([workspace_id, created_at])
+  @@index([status, created_at])
+}
+
+model optimization_results {
+  id              String    @id @default(uuid())
+  job_id          String    @unique
+  summary         Json
+  frontier_points Json?
+  optimal_weights Json?
+  checksum        String
+  expires_at      DateTime
+
+  job optimization_jobs @relation(fields: [job_id], references: [id])
+}
