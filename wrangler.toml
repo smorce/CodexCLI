@@ -1,0 +1,17 @@
+# This file is the configuration for the Cloudflare Worker.
+# It defines the entry point, compatibility settings, and bindings.
+name = "market-data-service"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Define the binding for our Durable Object.
+# Miniflare and Wrangler will use this to link the binding name
+# in the code (RECOMPUTATION_JOB) to the exported class name.
+[[durable_objects.bindings]]
+name = "RECOMPUTATION_JOB"
+class_name = "RecomputationJob"
+
+# Define migrations for the Durable Object to handle class changes.
+[[migrations]]
+tag = "v1" # A unique identifier for this migration
+new_classes = ["RecomputationJob"] # The list of new or modified DO classes
