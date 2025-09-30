@@ -33,6 +33,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/trigger-issue-to-pr.
 フローになった。
 
 
+一旦、この仕組みでOK。
+「あなたの役割は、Step 4 の「実装指示書（GitHub Issue）の作成」までです。Step 5 のコーディング実装は行いません。」
+をAGENTS.mdに入れちゃうと、Issueドリブンの実装をしなくてStep5の実行をしてくれなかったので、Instructions1.md の方に書くようにした。
+で、Issueドリブンの実装はちょっとだけ動いたけど、1つステップが進んだら終了しちゃう。TDD形式の実装はテストの実行が含まれるから難しいのかな？
+現状、Step5 の実装は Cursor を使わないといけない感じになっている。もしくは、Jules を使うか。
+ただ、この仕組み自体はかなり良くてエンタープライズ級アプリの実装には良いので、一旦このままで。
+
+
+
 ==================
 GitHub Actions 上で Codex を ChatGPT 認証で動かすフローを追加しました。secrets.CODEX_AUTH_JSON が存在する場合は preferred_auth_method = "chatgpt" を設定し、~/.codex/auth.json を復元して ChatGPT サブスク側の利用枠で実行します。なければ従来どおり API key モードで動作します。
 - 使い方:

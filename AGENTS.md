@@ -344,6 +344,7 @@ uv run python script.py
 uv run hello.py
 uv run pytest tests/
 uv run ruff check
+uv run python -c \"print('Hello from uv')\"
 ```
 
 - プロジェクト環境でCLIツールやシェルスクリプトも実行可能
